@@ -1,6 +1,6 @@
 CC = g++
 CPPFLAGS = -O3 -std=c++14
-HEADERS = graph.h
+HEADERS = graph.h partition.h
 SOURCES = graph.cpp main.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 EXECUTABLE = graph_project

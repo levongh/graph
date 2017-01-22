@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "graph.h"
+#include "partition.h"
 
 int main(){
         Graph *temp=new Graph();
@@ -23,9 +24,9 @@ int main(){
         temp->add_edge("d","g",20);
         temp->add_edge("e","b",50);
         temp->add_edge("e","g",30);
-        //temp->add_edge("f","c",10);
+        temp->add_edge("f","c",10);
         temp->add_edge("f","d",40);
-        //temp->add_edge("g","a",20);
+        temp->add_edge("g","a",20);
         temp->BFS("a");
         temp->mst_kruskal();
         std::cout << std::endl;
