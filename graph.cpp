@@ -19,8 +19,8 @@ void Vertex::print_neighbours() const
 
 unsigned int Graph::get_index(const std::string& temp) const
 {
-    for(unsigned int i = 0; i < m_vertexes.size(); ++i){
-        if(m_vertexes[i]==temp) {
+    for (unsigned int i = 0; i < m_vertexes.size(); ++i) {
+        if (m_vertexes[i] == temp) {
             return i;
         }
     }
@@ -83,6 +83,11 @@ void Graph::BFS(const std::string& s){
     std::cout << "end";
 }
 
+namespace {
+/**
+ * @brief this part is designed as a helper part for kruskal MST implementation
+ */
+
 std::map<Vertex * , Vertex * > PARENT;
 std::map<Vertex * , int> RANK;
 
@@ -95,8 +100,10 @@ Vertex* find(Vertex* vertex)
     }
 }
 
-void Graph::mst_kruskal() {
+} //unnamed namespace
 
+void Graph::mst_kruskal()
+{
     std::vector<Edge*> res;
 
     for (unsigned int i = 0; i < m_vertexes.size(); ++i) {
@@ -108,8 +115,8 @@ void Graph::mst_kruskal() {
     sort(m_edges.begin(), m_edges.end(), [](Edge* lhs, Edge* rhs) {
                                             return lhs->m_weight < rhs->m_weight;});
 
-    for (Edge* e : m_edges) {         // O(E)
-        Vertex* root1 = find(e->m_vertex1);  // O(E) worst case
+    for (const auto& e : m_edges) {
+        Vertex* root1 = find(e->m_vertex1);
         Vertex* root2 = find(e->m_vertex2);
         if (root1 != root2) {
             res.push_back(e);
@@ -123,7 +130,7 @@ void Graph::mst_kruskal() {
         }
     }
 
-    for (Edge* e : res) {
+    for (const auto& e : res) {
         std::cout << e->m_vertex1->m_name << " -- "
              << e->m_vertex2->m_name << "  " << e->m_weight << std::endl;
     }
@@ -151,7 +158,7 @@ void Graph::mst_prim(const std::string& root)
             res[u] = PARENT[u];
         }
 
-        for(std::pair<int, Vertex*> v : u->m_adj ){
+        for(const auto& v : u->m_adj ){
             if (std::find(Q.begin(), Q.end(), (v.second)->m_name)!= Q.end()){
                 if(v.first < KEY[v.second]){
                     PARENT[v.second] = u;
@@ -162,10 +169,9 @@ void Graph::mst_prim(const std::string& root)
 
     }
 
-    for (auto e : res) {
-        std::cout << (e.first)->m_name << " -- " << (e.second)->m_name << std::endl;
+    for (const auto& e : res) {
+        std::cout << e.first->m_name << " -- " << e.second->m_name << std::endl;
     }
-
 }
 
 std::map<std::string, std::pair<int, std::string> > Graph::Dijkstra(const std::string& start) {
@@ -186,7 +192,7 @@ std::map<std::string, std::pair<int, std::string> > Graph::Dijkstra(const std::s
         currentNode = Q.top();
         Q.pop();
         if (currentNode.first <= weights[(currentNode.second)->m_name]) {
-            for(std::pair<int, Vertex*> v : (currentNode.second)->m_adj ){
+            for(const auto& v : (currentNode.second)->m_adj ){
                 if (weights[(v.second)->m_name] > weights[(currentNode.second)->m_name] + v.first) {
                     parents[(v.second)->m_name] = (currentNode.second)->m_name;
                     weights[(v.second)->m_name] = weights[(currentNode.second)->m_name] + v.first;
@@ -199,6 +205,6 @@ std::map<std::string, std::pair<int, std::string> > Graph::Dijkstra(const std::s
     for (unsigned int i = 0; i < m_vertexes.size(); ++i){
         result[m_vertexes[i]] = std::make_pair(weights[m_vertexes[i]], parents[m_vertexes[i]]);
     }
-    return result;
+    return std::move(result);
 }
 
