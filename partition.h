@@ -1,5 +1,9 @@
 #pragma once
 
+#include <cassert>
+#include <vector>
+#include <mutex>
+
 class graph;
 
 enum class partition_type
@@ -18,7 +22,7 @@ public:
         , m_count{count}
         , m_allow_multithreading{allow}
     {
-        //assert count >=2
+        assert(count >=2);
     }
 private:
     partition_type m_type;
@@ -36,12 +40,34 @@ public:
     {
     }
 
-    std::vector<graph*> run_partition();
-private:
-    void initial_partition();
+    virtual std::vector<graph*> run_partition() = 0;
 
-private:
+protected:
     graph* m_graph;
     partition_config m_config;
 };
 
+class partition_manager
+{
+
+public:
+    static partition_manager* get_instance();
+
+    static void remove_instance();
+
+    /// @brief copy constructor
+    partition_manager(const partition_manager& other) = delete;
+
+    /// @brief copy assignment operator
+    partition_manager& operator=(const partition_manager& other) = delete;
+
+
+    /// @brief move constructor
+    partition_manager(partition_manager&& other) = delete;
+
+    /// @brief copy assignment operator
+    partition_manager& operator=(partition_manager&& other) = delete;
+
+private:
+    static partition_manager* s_instance;
+};

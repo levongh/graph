@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "graph.h"
-#include "partition.h"
+#include "kernigan_lin.h"
 
 int main(){
         Graph *temp=new Graph();
@@ -27,7 +27,9 @@ int main(){
         temp->add_edge("f","c",10);
         temp->add_edge("f","d",40);
         temp->add_edge("g","a",20);
-        temp->BFS("a");
+        std::cout << std::endl;
+        temp->print();
+        /*temp->BFS("a");
         temp->mst_kruskal();
         std::cout << std::endl;
         temp->mst_prim("f");
@@ -48,6 +50,7 @@ int main(){
         std::cout<<"'"<<std::endl;
         std::cout<<"Distance from 'a' to 'h' is "<<distance["h"].first<<" and parent is '"<<distance["h"].second;
         std::cout<<"'"<<std::endl;
+        */
         delete temp;
         return 0;
 
