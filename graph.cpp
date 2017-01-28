@@ -168,7 +168,6 @@ void Graph::mst_prim(const std::string& root)
         }
 
     }
-
     for (const auto& e : res) {
         std::cout << e.first->m_name << " -- " << e.second->m_name << std::endl;
     }
@@ -208,3 +207,13 @@ std::map<std::string, std::pair<int, std::string> > Graph::Dijkstra(const std::s
     return std::move(result);
 }
 
+void Graph::print() const
+{
+    std::cout << "WORK" <<std::endl;
+    for (const auto& iter : work) {
+        std::cout << iter.first <<" " << iter.second->m_name << std::endl;;
+    }
+
+    std::cout << std::endl;
+    std::cout << "ADJ" <<std::endl;
+}

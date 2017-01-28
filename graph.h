@@ -81,6 +81,8 @@ public:
     {
     }
 
+    void print() const;
+
     /// @brief stores the map from name of vertex to Vertex class
     std::map<std::string, Vertex*> work;
 
