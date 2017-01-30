@@ -4,7 +4,7 @@
 #include <vector>
 #include <mutex>
 
-class graph;
+class Graph;
 
 enum class partition_type
 {
@@ -17,16 +17,32 @@ enum class partition_type
 struct partition_config
 {
 public:
-    partition_config(partition_type type = partition_type::KERNIGAN_LIN, short count = 2, bool allow = false)
+    partition_config(partition_type type = partition_type::KERNIGAN_LIN, unsigned short count = 2, bool allow = false)
         : m_type{type}
         , m_count{count}
         , m_allow_multithreading{allow}
     {
         assert(count >=2);
     }
+
+    partition_type get_partition_type() const
+    {
+        return m_type;
+    }
+
+    unsigned short get_partition_count() const
+    {
+        return m_count;
+    }
+
+    bool is_mutithreaded() const
+    {
+        return m_allow_multithreading;
+    }
+
 private:
     partition_type m_type;
-    short m_count;
+    unsigned short m_count;
     bool m_allow_multithreading;
 };
 
@@ -34,16 +50,20 @@ private:
 class graph_partition
 {
 public:
-    graph_partition(graph* G, partition_config config)
+    graph_partition(Graph* G, partition_config config)
         : m_graph{G}
         , m_config{config}
     {
     }
 
-    virtual std::vector<graph*> run_partition() = 0;
+    virtual void run_partition() = 0;
+
+    virtual ~graph_partition()
+    {
+    }
 
 protected:
-    graph* m_graph;
+    Graph* m_graph;
     partition_config m_config;
 };
 
@@ -54,6 +74,12 @@ public:
     static partition_manager* get_instance();
 
     static void remove_instance();
+
+    /// @brief default constructor
+    partition_manager() = default;
+
+    /// @brief destructor
+    ~partition_manager() = default;
 
     /// @brief copy constructor
     partition_manager(const partition_manager& other) = delete;
@@ -70,4 +96,5 @@ public:
 
 private:
     static partition_manager* s_instance;
+    static std::mutex s_mutex;
 };
