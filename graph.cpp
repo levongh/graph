@@ -9,11 +9,47 @@
 
 #include "graph.h"
 
+void Vertex::print() const
+{
+    std::cout <<  m_name <<' ';
+    for (const auto& iter : m_adj) {
+        std::cout << iter.first << " " << iter.second->m_name << "   ";
+    }
+    std::cout << std::endl;
+}
+
 void Vertex::print_neighbours() const
 {
     for (const auto& iter : m_adj) {
         static int k = 0;
         std::cout << ++k  << ": "<< iter.second->m_name <<std::endl;
+    }
+}
+
+unsigned Graph::get_weight(Vertex* vert1, Vertex* vert2)
+{
+    Edge temp = Edge(vert1, vert2);
+    auto iter = m_edges.find(&temp);
+    if (iter != m_edges.end()) {
+        return (*iter)->m_weight;
+    } else {
+        return 0;
+    }
+}
+
+void Graph::initial_partition(std::vector<Vertex*>& label_1, std::vector<Vertex*>& label_2)
+{
+    const auto pivot = m_numvertexes/2;
+    auto vert_iter = work.begin();
+    for (unsigned  i = 0; i < pivot; ++i) {
+        vert_iter->second->set_label(0);
+        label_1.push_back(vert_iter->second);
+        ++vert_iter;
+    }
+    for (unsigned i = pivot; i < m_numvertexes; ++i) {
+        vert_iter->second->set_label(1);
+        label_2.push_back(vert_iter->second);
+        ++vert_iter;
     }
 }
 
@@ -52,17 +88,16 @@ void Graph::add_edge(const std::string& from, const std::string& to, double cost
         return;
     }
     Vertex* to_v = iter->second;
-    m_edges.push_back(new Edge(from_v, to_v, cost));
+    //m_edges.push_back(new Edge(from_v, to_v, cost));
+    m_edges.insert(new Edge(from_v, to_v, cost));
     from_v->m_adj.push_back(std::make_pair(cost, to_v));
-    if (m_directed == false) {
-        to_v->m_adj.push_back(std::make_pair(cost, from_v));
-    }
+    to_v->m_adj.push_back(std::make_pair(cost, from_v));
 }
 
 void Graph::BFS(const std::string& s){
     std::queue<std::string> q;
     bool* visited = new bool[m_numvertexes];
-    for(unsigned int i = 0; i < m_numvertexes; i++) {
+    for(unsigned int i = 0; i < m_numvertexes; ++i) {
         visited[i] = false;
     }
     visited[get_index(s)] = true;
@@ -112,9 +147,9 @@ void Graph::mst_kruskal()
         RANK[c] = 0;
     }
 
-    sort(m_edges.begin(), m_edges.end(), [](Edge* lhs, Edge* rhs) {
+/*    sort(m_edges.begin(), m_edges.end(), [](Edge* lhs, Edge* rhs) {
                                             return lhs->m_weight < rhs->m_weight;});
-
+*/
     for (const auto& e : m_edges) {
         Vertex* root1 = find(e->m_vertex1);
         Vertex* root2 = find(e->m_vertex2);
@@ -209,11 +244,8 @@ std::map<std::string, std::pair<int, std::string> > Graph::Dijkstra(const std::s
 
 void Graph::print() const
 {
-    std::cout << "WORK" <<std::endl;
+    std::cout << "vertex count: " << m_numvertexes << std::endl;
     for (const auto& iter : work) {
-        std::cout << iter.first <<" " << iter.second->m_name << std::endl;;
+        iter.second->print();
     }
-
-    std::cout << std::endl;
-    std::cout << "ADJ" <<std::endl;
 }

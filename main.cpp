@@ -22,13 +22,14 @@ int main(){
         temp->add_edge("c","h",20);
         temp->add_edge("c","d",10);
         temp->add_edge("d","g",20);
-        temp->add_edge("e","b",50);
         temp->add_edge("e","g",30);
-        temp->add_edge("f","c",10);
         temp->add_edge("f","d",40);
-        temp->add_edge("g","a",20);
         std::cout << std::endl;
         temp->print();
+        graph_partition* kl_part = new kernigan_lin(temp);
+        std::cout<< std::endl;
+        std::cout<< std::endl;
+        kl_part->run_partition();
         /*temp->BFS("a");
         temp->mst_kruskal();
         std::cout << std::endl;
@@ -51,6 +52,7 @@ int main(){
         std::cout<<"Distance from 'a' to 'h' is "<<distance["h"].first<<" and parent is '"<<distance["h"].second;
         std::cout<<"'"<<std::endl;
         */
+        delete kl_part;
         delete temp;
         return 0;
 

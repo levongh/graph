@@ -1,7 +1,7 @@
 CC = g++
-CPPFLAGS = -O3 -std=c++14
+CPPFLAGS = -O3 -std=c++14 -Wall -g
 HEADERS = graph.h partition.h kernigan_lin.h
-SOURCES = graph.cpp main.cpp kernigan_lin.cpp
+SOURCES = graph.cpp partition.cpp main.cpp kernigan_lin.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 EXECUTABLE = graph_project
 
