@@ -30,7 +30,11 @@ private:
     /// @bried function to create initial partition for given graph
     void initial_partition(std::vector<Vertex*>& label_1, std::vector<Vertex*>& label_2);
 
+    void accept_moves(int index);
+
     int calculate_cut() const;
+
+    void print_subsets() const;
 
 private:
     std::vector<std::vector<Vertex*> > m_subsets;
