@@ -48,7 +48,7 @@ void Graph::initial_partition(std::vector<Vertex*>& label_1, std::vector<Vertex*
     }
 }
 
-unsigned int Graph::get_index(const std::string& temp) const
+unsigned int Graph::get_index(const unsigned temp) const
 {
     for (unsigned int i = 0; i < m_vertexes.size(); ++i) {
         if (m_vertexes[i] == temp) {
@@ -58,7 +58,7 @@ unsigned int Graph::get_index(const std::string& temp) const
     return m_numvertexes;
 }
 
-void Graph::add_vertex(const std::string& name)
+void Graph::add_vertex(const unsigned name)
 {
     if (work.find(name) == work.end()) {
         work[name] = new Vertex(name);
@@ -69,7 +69,7 @@ void Graph::add_vertex(const std::string& name)
     std::cout << "\nVertex already exists!";
 }
 
-void Graph::add_edge(const std::string& from, const std::string& to, double cost)
+void Graph::add_edge(const unsigned from, const unsigned to, double cost)
 {
     auto iter = work.find(from);
     if (iter == work.end()) {
@@ -89,8 +89,8 @@ void Graph::add_edge(const std::string& from, const std::string& to, double cost
     to_v->m_adj.push_back(std::make_pair(cost, from_v));
 }
 
-void Graph::BFS(const std::string& s){
-    std::queue<std::string> q;
+void Graph::BFS(const unsigned s){
+    std::queue<unsigned> q;
     bool* visited = new bool[m_numvertexes];
     for(unsigned int i = 0; i < m_numvertexes; ++i) {
         visited[i] = false;
@@ -99,7 +99,7 @@ void Graph::BFS(const std::string& s){
     q.push(s);
     std::vector<std::pair<int, Vertex*> >::iterator iter;
     while(!q.empty()){
-        std::string str = q.front();
+        unsigned str = q.front();
         std::cout << str << "->";
         q.pop();
 
@@ -166,7 +166,7 @@ void Graph::mst_kruskal()
     }
 }
 
-void Graph::mst_prim(const std::string& root)
+void Graph::mst_prim(const unsigned root)
 {
     std::map<Vertex*, Vertex*> res;
     std::map<Vertex*, Vertex*> PARENT;
@@ -177,10 +177,10 @@ void Graph::mst_prim(const std::string& root)
         KEY[work[c]] = std::numeric_limits<int>::max();
     }
     KEY[work[root]] = 0;
-    std::vector<std::string> Q = m_vertexes;
+    std::vector<unsigned> Q = m_vertexes;
 
     while (!Q.empty()) {
-        std::string temp = *std::min_element(Q.begin(), Q.end(), [&](std::string x, std::string y) {return KEY[work[x]] < KEY[work[y]];});
+        unsigned temp = *std::min_element(Q.begin(), Q.end(), [&](unsigned x, unsigned y) {return KEY[work[x]] < KEY[work[y]];});
         Vertex *u= work[temp];
         auto iter = std::remove(Q.begin(), Q.end(), temp);
         Q.erase(iter, Q.end());
@@ -203,12 +203,12 @@ void Graph::mst_prim(const std::string& root)
     }
 }
 
-std::map<std::string, std::pair<int, std::string> > Graph::Dijkstra(const std::string& start) {
-    std::map<std::string, int > weights;
-    std::map<std::string, std::string > parents;
+std::map<unsigned, std::pair<int, unsigned> > Graph::Dijkstra(const unsigned start) {
+    std::map<unsigned, int > weights;
+    std::map<unsigned, unsigned > parents;
     for (unsigned int i = 0; i < m_vertexes.size(); ++i){
         weights[m_vertexes[i]] = std::numeric_limits<int>::max();
-        parents[m_vertexes[i]] = "";
+        parents[m_vertexes[i]] = 0;
     }
 
     std::priority_queue<std::pair<int, Vertex*>, std::vector<std::pair<int, Vertex*> >,CompareGreater> Q;
@@ -230,7 +230,7 @@ std::map<std::string, std::pair<int, std::string> > Graph::Dijkstra(const std::s
             }
         }
     }
-    std::map<std::string, std::pair<int, std::string> > result;
+    std::map<unsigned, std::pair<int, unsigned> > result;
     for (unsigned int i = 0; i < m_vertexes.size(); ++i){
         result[m_vertexes[i]] = std::make_pair(weights[m_vertexes[i]], parents[m_vertexes[i]]);
     }
