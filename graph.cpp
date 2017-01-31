@@ -18,18 +18,13 @@ void Vertex::print() const
     std::cout << std::endl;
 }
 
-void Vertex::print_neighbours() const
-{
-    for (const auto& iter : m_adj) {
-        static int k = 0;
-        std::cout << ++k  << ": "<< iter.second->m_name <<std::endl;
-    }
-}
-
 unsigned Graph::get_weight(Vertex* vert1, Vertex* vert2)
 {
-    Edge temp = Edge(vert1, vert2);
-    auto iter = m_edges.find(&temp);
+    const auto& iter = std::find_if(m_edges.begin(), m_edges.end(), [vert1, vert2] (const Edge* e) -> bool
+            {
+                return (vert1->m_name == e->m_vertex1->m_name)
+                        && (vert2->m_name == e->m_vertex2->m_name);
+            });
     if (iter != m_edges.end()) {
         return (*iter)->m_weight;
     } else {
@@ -244,7 +239,6 @@ std::map<std::string, std::pair<int, std::string> > Graph::Dijkstra(const std::s
 
 void Graph::print() const
 {
-    std::cout << "vertex count: " << m_numvertexes << std::endl;
     for (const auto& iter : work) {
         iter.second->print();
     }
