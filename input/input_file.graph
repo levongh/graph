@@ -1,0 +1,12 @@
+% It should be set to 1 if the graph has edge weights,
+% 10 if the graph has node weights and 11 if the graph
+% has edge and node weights.
+8 11 10 
+2 20   4 80   7 90
+1 20   6 10   5 10   
+6 50   8 20   4 10   
+1 80   3 10   7 20  40 6   
+2 10   6 30    
+2 10   3 50   4 40    
+1 90   4 20   5 30   
+3 20  

@@ -14,10 +14,10 @@ void kernigan_lin::run_partition()
     /// step 2
     for (unsigned i = 0; i < m_subsets.size(); ++i) {
         std::sort(m_subsets[i].begin(), m_subsets[i].end(),
-                 [this] (Vertex* vert1, Vertex* vert2) -> bool
-                 {
+                [this] (Vertex* vert1, Vertex* vert2) -> bool
+                {
                     return internal_cost(vert1, vert1->get_label()) < internal_cost(vert2, vert2->get_label());
-                 });
+                });
     }
 
 
@@ -42,7 +42,6 @@ void kernigan_lin::run_partition()
     }
     print_subsets();
     accept_moves(max_gain_index);
-
     std::cout << calculate_cut() << std::endl;
     print_subsets();
 }

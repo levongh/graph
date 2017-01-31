@@ -9,11 +9,19 @@
 
 namespace reader {
 
+    enum class mode
+    {
+        SIMPLE,
+        EDGE,
+        EDGE_NODE
+    };
+
     class read_graph
     {
     public:
         explicit read_graph(const std::string& file_name)
             : m_file_name{file_name}
+            , m_mode{mode::SIMPLE}
         {
         }
 
@@ -27,9 +35,15 @@ namespace reader {
     public:
         void parse();
 
+    private:
+        bool read_first_line(const std::string& str, unsigned& vert, unsigned& edge, size_t pos);
+
+    private:
+        void parse_line(const std::string& str, unsigned line_numer);
 
     public:
         std::string m_file_name;
+        mode m_mode;
     };
 
 } // namespace reader

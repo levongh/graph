@@ -15,7 +15,7 @@ class Vertex
 {
 public:
     /// @brief constructor
-    Vertex(const std::string& name, unsigned short label = 0)
+    Vertex(const unsigned name, unsigned short label = 0)
         : m_name{name}
         , m_label{label}
     {
@@ -35,7 +35,7 @@ public:
 
 //private:
     std::vector<std::pair<int, Vertex*> > m_adj;
-    std::string m_name;
+    unsigned m_name;
 
 private:
     unsigned short m_label;
@@ -117,37 +117,37 @@ public:
 
     /// @brief returns thw index from name of vetex
     /// @brief index refers to vertex number in the graph
-    unsigned int get_index(const std::string& name) const;
+    unsigned int get_index(const unsigned name) const;
 
     /// @brief make initial partition
     void initial_partition(std::vector<Vertex*>& label_1, std::vector<Vertex*>& label_2);
 
     /// @brief implements MST prim algorihm
     /// @brief prints out all the edges in the MST
-    void mst_prim(const std::string& from);
+    void mst_prim(const unsigned from);
 
     /// @brief implements MST Kruskal's algorithm
     /// @brief prints out all the edges in the MST
     void mst_kruskal();
 
     /// @brief implements BFS algorithm
-    void BFS(const std::string& );
+    void BFS(const unsigned );
 
     /// @brief add new vertex to graph
-    void add_vertex(const std::string& name);
+    void add_vertex(const unsigned name);
 
     /// @brief add new edge to graph
-    void add_edge(const std::string& from, const std::string& to, double cost);
+    void add_edge(const unsigned from, const unsigned to, double cost = 1);
 
     /// @brief implemaentaion of Dijkstra's algorithm
-    std::map<std::string, std::pair<int, std::string> > Dijkstra(const std::string& start);
+    std::map<unsigned, std::pair<int, unsigned> > Dijkstra(const unsigned start);
 
 private:
     /// @brief stores the map from name of vertex to Vertex class
-    std::map<std::string, Vertex*> work;
+    std::map<unsigned, Vertex*> work;
     bool m_directed;
     unsigned int m_numvertexes;
-    std::vector<std::string> m_vertexes;
+    std::vector<unsigned> m_vertexes;
     //std::vector<Edge*> m_edges;
     std::set<Edge*, edge_compare> m_edges;
 };
