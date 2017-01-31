@@ -8,9 +8,9 @@ void kernigan_lin::run_partition()
 {
     /// step 1
     initial_partition(m_subsets[0], m_subsets[1]);
-
-    /// step 2
+    /// print initial cut size
     std::cout << calculate_cut() << std::endl;
+    /// step 2
     for (unsigned i = 0; i < m_subsets.size(); ++i) {
         std::sort(m_subsets[i].begin(), m_subsets[i].end(),
                  [this] (Vertex* vert1, Vertex* vert2) -> bool
@@ -26,10 +26,12 @@ void kernigan_lin::run_partition()
     //std::vector<unsigned> gain_vector(m_subsets[0].size(), 0);
 
     std::vector<std::pair<Vertex*, Vertex*> > to_move;
-    while (iter1 != m_subsets[0].begin() || iter2 != m_subsets[1].begin()) {
+    while (iter1 != m_subsets[0].end() || iter2 != m_subsets[1].end()) {
         if (reduction(*iter1, (*iter1)->get_label(), *iter2, (*iter2)->get_label()) > 0) {
             to_move.push_back(std::make_pair(*iter1, *iter2));
         }
+        ++iter1;
+        ++iter2;
     }
     /// do calculation and accept/or decline moveing
     
@@ -42,7 +44,7 @@ void kernigan_lin::run_partition()
     }
 }
 
-unsigned kernigan_lin::calculate_cut() const
+int kernigan_lin::calculate_cut() const
 {
     unsigned result = 0;
     for (const auto& elem : m_subsets[0]) {
@@ -56,7 +58,7 @@ void kernigan_lin::initial_partition(std::vector<Vertex*>& label_1, std::vector<
     m_graph->initial_partition(label_1, label_2);
 }
 
-unsigned kernigan_lin::internal_cost(Vertex* vert, unsigned short idx) const
+int kernigan_lin::internal_cost(Vertex* vert, unsigned short idx) const
 {
     unsigned result = 0;
     for (const auto& elem : vert->m_adj) {
@@ -67,7 +69,7 @@ unsigned kernigan_lin::internal_cost(Vertex* vert, unsigned short idx) const
     return result;
 }
 
-unsigned kernigan_lin::external_cost(Vertex* vert, unsigned short idx) const
+int kernigan_lin::external_cost(Vertex* vert, unsigned short idx) const
 {
     unsigned result = 0;
     for (const auto& elem : vert->m_adj) {
@@ -78,12 +80,12 @@ unsigned kernigan_lin::external_cost(Vertex* vert, unsigned short idx) const
     return result;
 }
 
-unsigned kernigan_lin::moveing_cost(Vertex* vert, unsigned short idx) const
+int kernigan_lin::moveing_cost(Vertex* vert, unsigned short idx) const
 {
     return external_cost(vert, idx) - internal_cost(vert, idx);
 }
 
-unsigned kernigan_lin::reduction(Vertex* vert1, unsigned short idx1, Vertex* vert2, unsigned short idx2) const
+int kernigan_lin::reduction(Vertex* vert1, unsigned short idx1, Vertex* vert2, unsigned short idx2) const
 {
     return moveing_cost(vert1, idx1) + moveing_cost(vert2, idx2) - 2 * m_graph->get_weight(vert1, vert2);
 }
