@@ -8,6 +8,7 @@ void kernigan_lin::run_partition()
 {
     /// step 1
     initial_partition(m_subsets[0], m_subsets[1]);
+    print_subsets();
     /// print initial cut size
     std::cout << calculate_cut() << std::endl;
     /// step 2
@@ -23,25 +24,46 @@ void kernigan_lin::run_partition()
     auto iter1 = m_subsets[0].begin();
     auto iter2 = m_subsets[1].begin();
     /// will use this container uring algorithm thase optimization
-    //std::vector<unsigned> gain_vector(m_subsets[0].size(), 0);
+    std::vector<unsigned> gain_vector;//(m_subsets[0].size(), 0);
 
-    std::vector<std::pair<Vertex*, Vertex*> > to_move;
     while (iter1 != m_subsets[0].end() || iter2 != m_subsets[1].end()) {
-        if (reduction(*iter1, (*iter1)->get_label(), *iter2, (*iter2)->get_label()) > 0) {
-            to_move.push_back(std::make_pair(*iter1, *iter2));
-        }
+        gain_vector.push_back(reduction(*iter1, (*iter1)->get_label(), *iter2, (*iter2)->get_label()));
         ++iter1;
         ++iter2;
     }
     /// do calculation and accept/or decline moveing
-    
+    int max_gain_index = -1;
+    unsigned max_gain = 0;
+    for (int i = 0; i < gain_vector.size(); ++i) {
+        if (max_gain + gain_vector[i] > max_gain) {
+            max_gain_index = i;
+        }
+        max_gain = max_gain + gain_vector[i];
+    }
+    print_subsets();
+    accept_moves(max_gain_index);
+
+    std::cout << calculate_cut() << std::endl;
+    print_subsets();
+}
+
+void kernigan_lin::accept_moves(int index)
+{
+    for (int i = 0; i < index; ++i) {
+        std::swap(m_subsets[0][i], m_subsets[1][i]);
+    }
+}
+
+void kernigan_lin::print_subsets() const
+{
     for (const auto& it: m_subsets[0]) {
-        std::cout <<it->m_name <<std::endl;
+        std::cout <<it->m_name <<' ';
     }
     std::cout<<std::endl;
     for (const auto& it: m_subsets[1]) {
-        std::cout <<it->m_name <<std::endl;
+        std::cout <<it->m_name <<' ';
     }
+    std::cout<<std::endl;
 }
 
 int kernigan_lin::calculate_cut() const
