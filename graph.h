@@ -31,10 +31,6 @@ public:
         m_label = label;
     }
 
-
-    /// @brief function to print all neighbors
-    void print_neighbours() const;
-
     void print() const;
 
 //private:
@@ -52,7 +48,7 @@ private:
 class CompareGreater
 {
 public:
-    bool operator()(const std::pair<int,Vertex *> lhs, const std::pair<int, Vertex *> rhs)
+    bool operator()(const std::pair<int, Vertex *> lhs, const std::pair<int, Vertex *> rhs)
     {
         return (lhs.first > rhs.first);
     }
@@ -91,7 +87,9 @@ class edge_compare
 public:
     bool operator()(const Edge* lhs, const Edge* rhs)
     {
-        return lhs->m_weight < rhs->m_weight;
+        return (lhs->m_vertex1->m_name < rhs->m_vertex1->m_name)
+                    && (lhs->m_vertex2->m_name <= rhs->m_vertex2->m_name);
+//        return lhs->m_weight < rhs->m_weight;
     }
 };
 
