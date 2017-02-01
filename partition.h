@@ -14,6 +14,13 @@ enum class partition_type
     SIMULATED_ANNEALING
 };
 
+/**
+ *  @brief class for algorithm configuration
+ *  @param m_type showing algorithm type this parameter should
+ *         \use paritition_manager class object
+ *  @param m_count showing partitions count
+ *  @param m_allow_multithreading showing is it accepatable to use mutithread partition or not
+ */
 struct partition_config
 {
 public:
@@ -46,6 +53,14 @@ private:
     bool m_allow_multithreading;
 };
 
+/**
+ * @class graph_partition
+ * @brief this pure virtual class designed to get more generic 
+ * @      \interface for graph partitioning all parition algorithms
+ *        \should inherit from it
+ * @param m_graph this is input graph on which algorithm should run
+ * @param m_config this is paritition gonfigurations which algorithm should get from input file
+ */
 
 class graph_partition
 {
@@ -56,6 +71,7 @@ public:
     {
     }
 
+    /// @brief virtual interface to run partitioning algorithm
     virtual void run_partition() = 0;
 
     virtual ~graph_partition()
@@ -67,6 +83,8 @@ protected:
     partition_config m_config;
 };
 
+/// @brief manager for partition alforithm creation
+/// @brief should work like builder pattern
 class partition_manager
 {
 

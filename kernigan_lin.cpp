@@ -26,7 +26,7 @@ void kernigan_lin::run_partition()
     /// will use this container uring algorithm thase optimization
     std::vector<unsigned> gain_vector;//(m_subsets[0].size(), 0);
 
-    while (iter1 != m_subsets[0].end() || iter2 != m_subsets[1].end()) {
+    while (iter1 != m_subsets[0].end() && iter2 != m_subsets[1].end()) {
         gain_vector.push_back(reduction(*iter1, (*iter1)->get_label(), *iter2, (*iter2)->get_label()));
         ++iter1;
         ++iter2;
