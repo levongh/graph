@@ -2,6 +2,13 @@
 
 #include "partition.h"
 
+/**
+ * @file  kernigan_lin.h
+ * @title declaration of kernigan_lin class
+ * @description this class is designed to implement graph partitionin KL algorithm
+ * @param m_subsets this container should keep partitioned grpah vertexes
+ * @author Levon Ghukasyan
+ */
 
 class kernigan_lin : public graph_partition
 {
