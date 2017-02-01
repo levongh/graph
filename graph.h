@@ -96,7 +96,6 @@ public:
 /** 
  * @brief class graph
  * @brief this is a simple implementation of graph data structure
- * @param m_directed for checking is graph directed or not 
  * @param m_numvertexes number of vertexes
  * @param m_vetexes names of vetexs
  * @param m_edges stores all edges in graph
@@ -105,10 +104,12 @@ class Graph
 {
 public:
     Graph(bool temp = false)
-        : m_directed{temp}
-        , m_numvertexes{0}
+        : m_numvertexes{0}
     {
     }
+
+    Graph(const std::set<unsigned>& vertexes,
+            const std::set<std::pair<std::pair<unsigned, unsigned>, unsigned> >& edges, bool dir = false);
 
     void print() const;
 
@@ -145,7 +146,6 @@ public:
 private:
     /// @brief stores the map from name of vertex to Vertex class
     std::map<unsigned, Vertex*> work;
-    bool m_directed;
     unsigned int m_numvertexes;
     std::vector<unsigned> m_vertexes;
     //std::vector<Edge*> m_edges;
