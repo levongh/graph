@@ -1,22 +1,48 @@
 #include <fstream>
-#include <sstream>
 #include <string>
 #include <iostream>
 
-#include <vector>
-#include <set>
-
+#include "graph.h"
 #include "graph_input.h"
+
 
 namespace {
 
 std::string whitespace(" \t");
 
-struct graph_line
+
+size_t parse_edge_weight(const std::string& str, size_t pos, unsigned& weight, unsigned line_number)
 {
-    std::vector<unsigned> m_vertex_list;
-    std::set<std::pair<unsigned, unsigned> > m_edge_list;
-};
+    pos = str.find_first_not_of(whitespace, pos);
+    if (pos == std::string::npos) {
+        return pos;
+    }
+    size_t next_pos = str.find_first_of(whitespace, pos);
+    auto weight_str = str.substr(pos, next_pos);
+    try {
+        weight = std::stoi(weight_str);
+    } catch (const std::invalid_argument& ex) {
+        std::cout << ex.what() << " : " << "In provided file graph edge weight is not correct: line"
+                               << line_number << " between columns: " <<  pos << ':' << next_pos << std::endl;
+        throw;
+    }
+    return next_pos;
+}
+
+Graph* create_graph(const reader::graph_data& data)
+{
+    if ((data.m_vert_count != data.m_vertex_list.size()) ||
+            (2 * data.m_edge_count != data.m_edge_list.size()))
+    {
+        std::cout << "Provided file is not correct\n"
+                  << "exppected vertex count: " << data.m_vert_count << " provided vertex count: " << data.m_vertex_list.size()
+                  << "\nexppected edge count:   " << 2 * data.m_edge_count << " provided edge cout:    " << data.m_edge_list.size()
+                  << std::endl;
+        return nullptr;
+    }
+
+    return new Graph(data.m_vertex_list, data.m_edge_list);
+}
 
 }
 
@@ -64,21 +90,42 @@ bool read_graph::read_first_line(const std::string& str, unsigned& vert, unsigne
     return true;
 }
 
-void read_graph::parse_line(const std::string& str, unsigned line_numer)
+void read_graph::parse_line(const std::string& str, size_t pos, unsigned line_number, graph_data& data)
 {
+    size_t initial_pos = str.find_first_not_of(whitespace, pos);
+    if (initial_pos == std::string::npos) {
+        return;
+    }
+    size_t next_pos = str.find_first_of(whitespace, initial_pos);
+    auto vert_str = str.substr(initial_pos, next_pos);
+    unsigned vert = std::stoi(vert_str);
+    unsigned weight = 0;
+    if (m_mode == mode::EDGE) {
+        next_pos = parse_edge_weight(str, next_pos, weight, line_number);
+    } else if (m_mode == mode::SIMPLE) {
+        weight = 1;
+    }
+    data.m_edge_list.insert(std::make_pair(std::make_pair(line_number, vert), weight));
+    //std::cout << line_number << ' ' << vert << ' ' << weight;
+    std::cout << vert << ' ' << weight << "  ";
+    if (next_pos == std::string::npos) {
+        return;
+    } else {
+        parse_line(str, next_pos, line_number, data);
+    }
 }
 
-void read_graph::parse()
+Graph* read_graph::parse()
 {
     std::ifstream infile(m_file_name, std::ios_base::in);
     if (!infile.good()) {
         std::cout << "File is not exist, please provide correct filename" << std::endl;
-        return;
+        return nullptr;
     }
-    std::vector<graph_line> graph_data;
     std::string line;
     static int line_number = 0;
 
+    graph_data data;
     while (std::getline(infile, line)) {
         if (line.empty()) {
             continue;
@@ -95,15 +142,19 @@ void read_graph::parse()
             unsigned vertex_count = 0;
             unsigned edge_count = 0;
             if (!read_first_line(line, vertex_count, edge_count, initial_pos)) {
-                return;
+                return nullptr;
             }
+            data.m_vert_count = vertex_count;
+            data.m_edge_count = edge_count;
             ++line_number;
-            std::cout << vertex_count << " " << edge_count << std::endl;
         } else {
-            parse_line(line, line_number);
+            parse_line(line, 0, line_number, data);
+            data.m_vertex_list.insert(line_number);
+            std::cout<< std::endl;
             ++line_number;
         }
     }
+    return create_graph(data);
 }
 
 } // namespace reader

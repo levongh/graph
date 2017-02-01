@@ -18,6 +18,18 @@ void Vertex::print() const
     std::cout << std::endl;
 }
 
+
+Graph::Graph(const std::set<unsigned>& vertexes,
+        const std::set<std::pair<std::pair<unsigned, unsigned>, unsigned> >& edges, bool dir)
+{
+    for (const auto& iter : vertexes) {
+        add_vertex(iter);
+    }
+    for (const auto& iter : edges) {
+       add_edge(iter.first.first, iter.first.second, iter.second);
+    }
+}
+
 unsigned Graph::get_weight(Vertex* vert1, Vertex* vert2)
 {
     const auto& iter = std::find_if(m_edges.begin(), m_edges.end(), [vert1, vert2] (const Edge* e) -> bool
@@ -83,10 +95,9 @@ void Graph::add_edge(const unsigned from, const unsigned to, double cost)
         return;
     }
     Vertex* to_v = iter->second;
-    //m_edges.push_back(new Edge(from_v, to_v, cost));
     m_edges.insert(new Edge(from_v, to_v, cost));
     from_v->m_adj.push_back(std::make_pair(cost, to_v));
-    to_v->m_adj.push_back(std::make_pair(cost, from_v));
+    //to_v->m_adj.push_back(std::make_pair(cost, from_v));
 }
 
 void Graph::BFS(const unsigned s){
