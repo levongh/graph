@@ -106,8 +106,6 @@ void read_graph::parse_line(const std::string& str, size_t pos, unsigned line_nu
         weight = 1;
     }
     data.m_edge_list.insert(std::make_pair(std::make_pair(line_number, vert), weight));
-    //std::cout << line_number << ' ' << vert << ' ' << weight;
-    std::cout << vert << ' ' << weight << "  ";
     if (next_pos == std::string::npos) {
         return;
     } else {
@@ -150,7 +148,6 @@ Graph* read_graph::parse()
         } else {
             parse_line(line, 0, line_number, data);
             data.m_vertex_list.insert(line_number);
-            std::cout<< std::endl;
             ++line_number;
         }
     }

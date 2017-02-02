@@ -25,6 +25,8 @@ int main(int argc, char** argv)
         //input_config.parse();
     }
     tmp->print();
+    std::cout<< std::endl;
+    std::cout<< std::endl;
     graph_partition* kl_part = new kernigan_lin(tmp);
     std::cout<< std::endl;
     std::cout<< std::endl;
