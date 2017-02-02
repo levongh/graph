@@ -12,43 +12,49 @@ void kernigan_lin::run_partition()
     /// print initial cut size
     std::cout << calculate_cut() << std::endl;
     /// step 2
-    for (unsigned i = 0; i < m_subsets.size(); ++i) {
-        std::sort(m_subsets[i].begin(), m_subsets[i].end(),
-                [this] (Vertex* vert1, Vertex* vert2) -> bool
-                {
-                    return internal_cost(vert1, vert1->get_label()) < internal_cost(vert2, vert2->get_label());
-                });
-    }
-
-
-    auto iter1 = m_subsets[0].begin();
-    auto iter2 = m_subsets[1].begin();
-    /// will use this container uring algorithm thase optimization
-    std::vector<unsigned> gain_vector;//(m_subsets[0].size(), 0);
-
-    while (iter1 != m_subsets[0].end() && iter2 != m_subsets[1].end()) {
-        gain_vector.push_back(reduction(*iter1, (*iter1)->get_label(), *iter2, (*iter2)->get_label()));
-        ++iter1;
-        ++iter2;
-    }
-    /// do calculation and accept/or decline moveing
-    int max_gain_index = -1;
-    unsigned max_gain = 0;
-    for (int i = 0; i < gain_vector.size(); ++i) {
-        if (max_gain + gain_vector[i] > max_gain) {
-            max_gain_index = i;
+    while (true) {
+        for (unsigned i = 0; i < m_subsets.size(); ++i) {
+            std::sort(m_subsets[i].begin(), m_subsets[i].end(),
+                    [this] (Vertex* vert1, Vertex* vert2) -> bool
+                    {
+                        return internal_cost(vert1, vert1->get_label()) > internal_cost(vert2, vert2->get_label());
+                    });
         }
-        max_gain = max_gain + gain_vector[i];
+
+        auto iter1 = m_subsets[0].begin();
+        auto iter2 = m_subsets[1].begin();
+        /// will use this container uring algorithm thase optimization
+        std::vector<unsigned> gain_vector;//(m_subsets[0].size(), 0);
+
+        while (iter1 != m_subsets[0].end() && iter2 != m_subsets[1].end()) {
+            gain_vector.push_back(reduction(*iter1, (*iter1)->get_label(), *iter2, (*iter2)->get_label()));
+            ++iter1;
+            ++iter2;
+        }
+        /// do calculation and accept/or decline moveing
+        int max_gain_index = -1;
+        unsigned max_gain = 0;
+        for (int i = 0; i < gain_vector.size(); ++i) {
+            if (max_gain + gain_vector[i] > max_gain) {
+                max_gain_index = i;
+            }
+            max_gain = max_gain + gain_vector[i];
+        }
+        if (max_gain_index == 0) {
+            return;
+        }
+        accept_moves(max_gain_index);
+        std::cout << calculate_cut() << std::endl;
+        print_subsets();
     }
-    print_subsets();
-    accept_moves(max_gain_index);
-    std::cout << calculate_cut() << std::endl;
-    print_subsets();
 }
 
 void kernigan_lin::accept_moves(int index)
 {
     for (int i = 0; i < index; ++i) {
+        const auto lbl = m_subsets[0][i]->get_label();
+        m_subsets[0][i]->set_label(m_subsets[1][i]->get_label());
+        m_subsets[1][i]->set_label(lbl);
         std::swap(m_subsets[0][i], m_subsets[1][i]);
     }
 }
@@ -56,11 +62,11 @@ void kernigan_lin::accept_moves(int index)
 void kernigan_lin::print_subsets() const
 {
     for (const auto& it: m_subsets[0]) {
-        std::cout <<it->m_name <<' ';
+        std::cout <<it->m_name << " l" << it->get_label() << ' ';
     }
     std::cout<<std::endl;
     for (const auto& it: m_subsets[1]) {
-        std::cout <<it->m_name <<' ';
+        std::cout <<it->m_name << " l" << it->get_label() << ' ';
     }
     std::cout<<std::endl;
 }

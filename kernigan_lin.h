@@ -14,8 +14,8 @@ class kernigan_lin : public graph_partition
 {
 public:
     kernigan_lin(Graph* G, partition_config config = partition_config())
-        : graph_partition(G, config)
-        , m_subsets(config.get_partition_count())
+        : graph_partition{G, config}
+        , m_subsets{config.get_partition_count()}
     {
     }
 
