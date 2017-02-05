@@ -41,6 +41,7 @@ private:
     unsigned short m_label;
 };
 
+
 /**
  * @brief class CompareGreater
  * @brief class to compare two vertexes in priority queues
