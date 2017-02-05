@@ -18,7 +18,6 @@ void Vertex::print() const
     std::cout << std::endl;
 }
 
-
 Graph::Graph(const std::set<unsigned>& vertexes,
         const std::set<std::pair<std::pair<unsigned, unsigned>, unsigned> >& edges, bool dir)
 {
