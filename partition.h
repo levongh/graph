@@ -1,8 +1,10 @@
 #pragma once
 
+#include <iostream>
 #include <cassert>
 #include <vector>
 #include <mutex>
+
 
 class Graph;
 class Edge;
@@ -15,6 +17,7 @@ enum class partition_type
     K_WAY,
     SIMULATED_ANNEALING
 };
+
 
 /**
  *  @brief class for algorithm configuration
@@ -84,19 +87,10 @@ protected:
     /// @bried function to create initial partition for given graph
     void initial_partition(std::vector<Vertex*>& label_1, std::vector<Vertex*>& label_2);
 
-    /// @brief function to sum up vertex internal cost
-    int internal_cost(Vertex* vert) const;
-
-    /// @brief function to sum up vertex external cost
-    int external_cost(Vertex* vert) const;
-
     /// @brief returns the cutsize
     int calculate_cut(const std::vector<Vertex*>& set) const;
 
-    /// @brief function to sum up moveing cost
-    int moveing_cost(Vertex* vert) const;
-
-
+    void print_subsets(const std::vector<Vertex*>& first, const std::vector<Vertex*>& second) const;
 
 protected:
     Graph* m_graph;

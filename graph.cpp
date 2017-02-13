@@ -1,13 +1,37 @@
 #include <iostream>
-#include <vector>
-#include <map>
-#include <string>
 #include <queue>
-#include <vector>
 #include <algorithm>
 #include <limits>
 
 #include "graph.h"
+
+
+int Vertex::internal_cost() const
+{
+    unsigned result = 0;
+    for (const auto& elem : m_adj) {
+        if (elem.second->get_label() == get_label()) {
+            result += elem.first;
+        }
+    }
+    return result;
+}
+
+int Vertex::external_cost() const
+{
+    unsigned result = 0;
+    for (const auto& elem : m_adj) {
+        if (elem.second->get_label() != get_label()) {
+            result += elem.first;
+        }
+    }
+    return result;
+}
+
+int Vertex::moveing_cost() const
+{
+    return external_cost() - internal_cost();
+}
 
 void Vertex::print() const
 {
@@ -59,6 +83,14 @@ void Graph::initial_partition(std::vector<Vertex*>& label_1, std::vector<Vertex*
     }
 }
 
+void Graph::initialize_buckets(std::multimap<int, Vertex*, std::greater<int> >& buckets)
+{
+    for (const auto& iter : work) {
+        buckets.insert(std::make_pair(iter.second->internal_cost(), iter.second));
+    }
+}
+
+
 unsigned int Graph::get_index(const unsigned temp) const
 {
     for (unsigned int i = 0; i < m_vertexes.size(); ++i) {
@@ -96,7 +128,6 @@ void Graph::add_edge(const unsigned from, const unsigned to, double cost)
     Vertex* to_v = iter->second;
     m_edges.insert(new Edge(from_v, to_v, cost));
     from_v->m_adj.push_back(std::make_pair(cost, to_v));
-    //to_v->m_adj.push_back(std::make_pair(cost, from_v));
 }
 
 void Graph::BFS(const unsigned s){
@@ -152,9 +183,6 @@ void Graph::mst_kruskal()
         RANK[c] = 0;
     }
 
-/*    sort(m_edges.begin(), m_edges.end(), [](Edge* lhs, Edge* rhs) {
-                                            return lhs->m_weight < rhs->m_weight;});
-*/
     for (const auto& e : m_edges) {
         Vertex* root1 = find(e->m_vertex1);
         Vertex* root2 = find(e->m_vertex2);
