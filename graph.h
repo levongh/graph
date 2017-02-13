@@ -31,6 +31,15 @@ public:
         m_label = label;
     }
 
+    /// @brief function to sum up vertex internal cost
+    int internal_cost() const;
+
+    /// @brief function to sum up vertex external cost
+    int external_cost() const;
+
+    /// @brief function to sum up moveing cost
+    int moveing_cost() const;
+
     void print() const;
 
 //private:
@@ -90,7 +99,6 @@ public:
     {
         return (lhs->m_vertex1->m_name < rhs->m_vertex1->m_name)
                     && (lhs->m_vertex2->m_name <= rhs->m_vertex2->m_name);
-//        return lhs->m_weight < rhs->m_weight;
     }
 };
 
@@ -143,6 +151,9 @@ public:
 
     /// @brief implemaentaion of Dijkstra's algorithm
     std::map<unsigned, std::pair<int, unsigned> > Dijkstra(const unsigned start);
+
+    /// @brief
+    void initialize_buckets(std::multimap<int, Vertex*, std::greater<int> >& buckets);
 
 private:
     /// @brief stores the map from name of vertex to Vertex class

@@ -4,6 +4,7 @@
 #include "graph_input.h"
 #include "graph.h"
 #include "kernigan_lin.h"
+#include "fiduccia_mattheyses.h"
 
 int main(int argc, char** argv)
 {
@@ -27,11 +28,18 @@ int main(int argc, char** argv)
     tmp->print();
     std::cout<< std::endl;
     std::cout<< std::endl;
-    graph_partition* kl_part = new kernigan_lin(tmp);
+
+    //graph_partition* kl_part = new kernigan_lin(tmp);
+    graph_partition* fm_part = new fiduccia_mattheyses(tmp);
+
     std::cout<< std::endl;
     std::cout<< std::endl;
-    kl_part->run_partition();
-    delete kl_part;
+
+    //kl_part->run_partition();
+    fm_part->run_partition();
+
+    //delete kl_part;
+    delete fm_part;
     delete tmp;
     return 0;
 }

@@ -1,0 +1,126 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+BFS	graph.cpp	/^void Graph::BFS(const unsigned s){$/;"	f	class:Graph
+CC	makefile	/^CC = g++$/;"	m
+CPPFLAGS	makefile	/^CPPFLAGS = -O1 -std=c++14 -Wall -g$/;"	m
+CompareGreater	graph.h	/^class CompareGreater$/;"	c
+Dijkstra	graph.cpp	/^std::map<unsigned, std::pair<int, unsigned> > Graph::Dijkstra(const unsigned start) {$/;"	f	class:Graph
+EDGE	graph_input.h	/^        EDGE,$/;"	m	class:reader::mode
+EXECUTABLE	makefile	/^EXECUTABLE = graph_project$/;"	m
+Edge	graph.h	/^	Edge(Vertex* vertex1, Vertex* vertex2, int weight = 1)$/;"	f	class:Edge
+Edge	graph.h	/^class Edge$/;"	c
+FETUCCIA_MATEISIS	partition.h	/^    FETUCCIA_MATEISIS,$/;"	m	class:partition_type
+Graph	graph.cpp	/^Graph::Graph(const std::set<unsigned>& vertexes,$/;"	f	class:Graph
+Graph	graph.h	/^    Graph(bool temp = false)$/;"	f	class:Graph
+Graph	graph.h	/^class Graph$/;"	c
+HEADERS	makefile	/^HEADERS = graph.h partition.h kernigan_lin.h graph_input.h fiduccia_mattheyses.h$/;"	m
+KERNIGAN_LIN	partition.h	/^    KERNIGAN_LIN,$/;"	m	class:partition_type
+K_WAY	partition.h	/^    K_WAY,$/;"	m	class:partition_type
+OBJECTS	makefile	/^OBJECTS = $(SOURCES:.cpp=.o)$/;"	m
+PARENT	graph.cpp	/^std::map<Vertex * , Vertex * > PARENT;$/;"	m	namespace:__anon1	file:
+RANK	graph.cpp	/^std::map<Vertex * , int> RANK;$/;"	m	namespace:__anon1	file:
+SIMPLE	graph_input.h	/^        SIMPLE,$/;"	m	class:reader::mode
+SOURCES	makefile	/^SOURCES = graph.cpp partition.cpp main.cpp kernigan_lin.cpp graph_input.cpp fiduccia_mattheyses.cpp$/;"	m
+Vertex	graph.h	/^    Vertex(const unsigned name, unsigned short label = 0)$/;"	f	class:Vertex
+Vertex	graph.h	/^class Vertex$/;"	c
+accept_moves	kernigan_lin.cpp	/^void kernigan_lin::accept_moves(int index)$/;"	f	class:kernigan_lin
+add_edge	graph.cpp	/^void Graph::add_edge(const unsigned from, const unsigned to, double cost)$/;"	f	class:Graph
+add_vertex	graph.cpp	/^void Graph::add_vertex(const unsigned name)$/;"	f	class:Graph
+calculate_cut	partition.cpp	/^int graph_partition::calculate_cut(const std::vector<Vertex*>& set) const$/;"	f	class:graph_partition
+create_graph	graph_input.cpp	/^Graph* create_graph(const reader::graph_data& data)$/;"	f	namespace:__anon3
+edge_compare	graph.h	/^class edge_compare$/;"	c
+external_cost	partition.cpp	/^int graph_partition::external_cost(Vertex* vert) const$/;"	f	class:graph_partition
+fiduccia_mattheyses	fiduccia_mattheyses.h	/^    fiduccia_mattheyses(Graph* G, partition_config config = partition_config())$/;"	f	class:fiduccia_mattheyses
+fiduccia_mattheyses	fiduccia_mattheyses.h	/^class fiduccia_mattheyses : public graph_partition$/;"	c
+find	graph.cpp	/^Vertex* find(Vertex* vertex)$/;"	f	namespace:__anon1
+get_index	graph.cpp	/^unsigned int Graph::get_index(const unsigned temp) const$/;"	f	class:Graph
+get_instance	partition.cpp	/^partition_manager* partition_manager::get_instance()$/;"	f	class:partition_manager
+get_label	graph.h	/^    unsigned short get_label()const$/;"	f	class:Vertex
+get_partition_count	partition.h	/^    unsigned short get_partition_count() const$/;"	f	struct:partition_config
+get_partition_type	partition.h	/^    partition_type get_partition_type() const$/;"	f	struct:partition_config
+get_weight	graph.cpp	/^unsigned Graph::get_weight(Vertex* vert1, Vertex* vert2)$/;"	f	class:Graph
+graph_data	graph_input.h	/^    struct graph_data$/;"	s	namespace:reader
+graph_partition	partition.h	/^    graph_partition(Graph* G, partition_config config)$/;"	f	class:graph_partition
+graph_partition	partition.h	/^class graph_partition$/;"	c
+initial_partition	graph.cpp	/^void Graph::initial_partition(std::vector<Vertex*>& label_1, std::vector<Vertex*>& label_2)$/;"	f	class:Graph
+initial_partition	partition.cpp	/^void graph_partition::initial_partition(std::vector<Vertex*>& label_1, std::vector<Vertex*>& label_2)$/;"	f	class:graph_partition
+internal_cost	partition.cpp	/^int graph_partition::internal_cost(Vertex* vert) const$/;"	f	class:graph_partition
+is_mutithreaded	partition.h	/^    bool is_mutithreaded() const$/;"	f	struct:partition_config
+kernigan_lin	kernigan_lin.h	/^    kernigan_lin(Graph* G, partition_config config = partition_config())$/;"	f	class:kernigan_lin
+kernigan_lin	kernigan_lin.h	/^class kernigan_lin : public graph_partition$/;"	c
+m_adj	graph.h	/^    std::vector<std::pair<int, Vertex*> > m_adj;$/;"	m	class:Vertex
+m_allow_multithreading	partition.h	/^    bool m_allow_multithreading;$/;"	m	struct:partition_config
+m_balance	fiduccia_mattheyses.h	/^   unsigned m_balance;$/;"	m	class:fiduccia_mattheyses
+m_buckets	fiduccia_mattheyses.h	/^   std::vector<std::vector<Vertex*> > m_buckets;$/;"	m	class:fiduccia_mattheyses
+m_config	partition.h	/^    partition_config m_config;$/;"	m	class:graph_partition
+m_count	partition.h	/^    unsigned short m_count;$/;"	m	struct:partition_config
+m_edge_count	graph_input.h	/^        unsigned m_edge_count;$/;"	m	struct:reader::graph_data
+m_edge_list	graph_input.h	/^        std::set<std::pair<std::pair<unsigned, unsigned>, unsigned> > m_edge_list;$/;"	m	struct:reader::graph_data
+m_edges	graph.h	/^    std::set<Edge*, edge_compare> m_edges;$/;"	m	class:Graph
+m_file_name	graph_input.h	/^        std::string m_file_name;$/;"	m	class:reader::read_graph
+m_free	fiduccia_mattheyses.h	/^   std::list<Vertex*> m_free;$/;"	m	class:fiduccia_mattheyses
+m_graph	partition.h	/^    Graph* m_graph;$/;"	m	class:graph_partition
+m_label	graph.h	/^    unsigned short m_label;$/;"	m	class:Vertex
+m_maxgain	fiduccia_mattheyses.h	/^   unsigned m_maxgain[2];$/;"	m	class:fiduccia_mattheyses
+m_mode	graph_input.h	/^        mode m_mode;$/;"	m	class:reader::read_graph
+m_name	graph.h	/^    unsigned m_name;$/;"	m	class:Vertex
+m_numvertexes	graph.h	/^    unsigned int m_numvertexes;$/;"	m	class:Graph
+m_passes	fiduccia_mattheyses.h	/^   unsigned m_passes;$/;"	m	class:fiduccia_mattheyses
+m_pmax	fiduccia_mattheyses.h	/^   int  m_pmax;$/;"	m	class:fiduccia_mattheyses
+m_ratio	fiduccia_mattheyses.h	/^   double m_ratio;$/;"	m	class:fiduccia_mattheyses
+m_subsets	kernigan_lin.h	/^    std::vector<std::vector<Vertex*> > m_subsets;$/;"	m	class:kernigan_lin
+m_type	partition.h	/^    partition_type m_type;$/;"	m	struct:partition_config
+m_vert_count	graph_input.h	/^        unsigned m_vert_count;$/;"	m	struct:reader::graph_data
+m_vertex1	graph.h	/^    Vertex* m_vertex1;                        \/\/initial vertex$/;"	m	class:Edge
+m_vertex2	graph.h	/^    Vertex* m_vertex2;                        \/\/final vertex$/;"	m	class:Edge
+m_vertex_list	graph_input.h	/^        std::set<unsigned> m_vertex_list;$/;"	m	struct:reader::graph_data
+m_vertexes	graph.h	/^    std::vector<unsigned> m_vertexes;$/;"	m	class:Graph
+m_weight	graph.h	/^    int m_weight;                             \/\/cost\/weight of the edge$/;"	m	class:Edge
+main	main.cpp	/^int main(int argc, char** argv)$/;"	f
+mode	graph_input.h	/^    enum class mode$/;"	c	namespace:reader
+moveing_cost	partition.cpp	/^int graph_partition::moveing_cost(Vertex* vert) const$/;"	f	class:graph_partition
+mst_kruskal	graph.cpp	/^void Graph::mst_kruskal()$/;"	f	class:Graph
+mst_prim	graph.cpp	/^void Graph::mst_prim(const unsigned root)$/;"	f	class:Graph
+operator ()	graph.h	/^    bool operator()(const Edge* lhs, const Edge* rhs)$/;"	f	class:edge_compare
+operator ()	graph.h	/^    bool operator()(const std::pair<int, Vertex *> lhs, const std::pair<int, Vertex *> rhs)$/;"	f	class:CompareGreater
+other	graph_input.h	/^        read_graph& operator=(const read_graph& other) = delete;$/;"	m	class:reader::read_graph
+other	graph_input.h	/^        read_graph& operator=(read_graph&& other) = delete;$/;"	m	class:reader::read_graph
+other	graph_input.h	/^        read_graph(const read_graph& other) = delete;$/;"	m	class:reader::read_graph
+other	graph_input.h	/^        read_graph(read_graph&& other) = delete;$/;"	m	class:reader::read_graph
+other	partition.h	/^    partition_manager& operator=(const partition_manager& other) = delete;$/;"	m	class:partition_manager
+other	partition.h	/^    partition_manager& operator=(partition_manager&& other) = delete;$/;"	m	class:partition_manager
+other	partition.h	/^    partition_manager(const partition_manager& other) = delete;$/;"	m	class:partition_manager
+other	partition.h	/^    partition_manager(partition_manager&& other) = delete;$/;"	m	class:partition_manager
+override	fiduccia_mattheyses.h	/^   virtual void run_partition() override;$/;"	m	class:fiduccia_mattheyses
+override	kernigan_lin.h	/^    virtual void run_partition() override;$/;"	m	class:kernigan_lin
+parse	graph_input.cpp	/^Graph* read_graph::parse()$/;"	f	class:reader::read_graph
+parse_edge_weight	graph_input.cpp	/^size_t parse_edge_weight(const std::string& str, size_t pos, unsigned& weight, unsigned line_number)$/;"	f	namespace:__anon3
+parse_line	graph_input.cpp	/^void read_graph::parse_line(const std::string& str, size_t pos, unsigned line_number, graph_data& data)$/;"	f	class:reader::read_graph
+partition_config	partition.h	/^    partition_config(partition_type type = partition_type::KERNIGAN_LIN, unsigned short count = 2, bool allow = false)$/;"	f	struct:partition_config
+partition_config	partition.h	/^struct partition_config$/;"	s
+partition_manager	partition.h	/^class partition_manager$/;"	c
+partition_type	partition.h	/^enum class partition_type$/;"	c
+print	graph.cpp	/^void Graph::print() const$/;"	f	class:Graph
+print	graph.cpp	/^void Vertex::print() const$/;"	f	class:Vertex
+print_subsets	kernigan_lin.cpp	/^void kernigan_lin::print_subsets() const$/;"	f	class:kernigan_lin
+read_first_line	graph_input.cpp	/^bool read_graph::read_first_line(const std::string& str, unsigned& vert, unsigned& edge, size_t pos)$/;"	f	class:reader::read_graph
+read_graph	graph_input.h	/^        explicit read_graph(const std::string& file_name)$/;"	f	class:reader::read_graph
+read_graph	graph_input.h	/^    class read_graph$/;"	c	namespace:reader
+reader	graph_input.cpp	/^namespace reader {$/;"	n	file:
+reader	graph_input.h	/^namespace reader {$/;"	n
+reduction	kernigan_lin.cpp	/^int kernigan_lin::reduction(Vertex* vert1, Vertex* vert2) const$/;"	f	class:kernigan_lin
+remove_instance	partition.cpp	/^void partition_manager::remove_instance()$/;"	f	class:partition_manager
+run_partition	fiduccia_mattheyses.cpp	/^void fiduccia_mattheyses::run_partition()$/;"	f	class:fiduccia_mattheyses
+run_partition	kernigan_lin.cpp	/^void kernigan_lin::run_partition()$/;"	f	class:kernigan_lin
+s_instance	partition.cpp	/^partition_manager* partition_manager::s_instance = nullptr;$/;"	m	class:partition_manager	file:
+s_instance	partition.h	/^    static partition_manager* s_instance;$/;"	m	class:partition_manager
+s_mutex	partition.cpp	/^std::mutex partition_manager::s_mutex;$/;"	m	class:partition_manager	file:
+s_mutex	partition.h	/^    static std::mutex s_mutex;$/;"	m	class:partition_manager
+set_label	graph.h	/^    void set_label(unsigned short label)$/;"	f	class:Vertex
+swap_vertexes	kernigan_lin.cpp	/^void swap_vertexes(Vertex*& vert1, Vertex*& vert2)$/;"	f	namespace:__anon2
+work	graph.h	/^    std::map<unsigned, Vertex*> work;$/;"	m	class:Graph
+~graph_partition	partition.h	/^    virtual ~graph_partition()$/;"	f	class:graph_partition

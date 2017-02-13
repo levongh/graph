@@ -1,8 +1,7 @@
-#include <iostream>
 #include <algorithm>
 
-#include "graph.h"
 #include "kernigan_lin.h"
+#include "graph.h"
 
 namespace {
 
@@ -14,22 +13,29 @@ void swap_vertexes(Vertex*& vert1, Vertex*& vert2)
     std::swap(vert1, vert2);
 }
 
+void report_algorithm_result(const unsigned initial, const unsigned current, const std::string& algorithm)
+{
+    std::cout << "Initial cut size: " << initial << " after running the " << algorithm  << " algorithm cut size: " << current << std::endl;
+}
+
 }
 
 void kernigan_lin::run_partition()
 {
+    std::cout << "KL algorithm starting ..." <<std::endl;
     /// step 1
     initial_partition(m_subsets[0], m_subsets[1]);
-    print_subsets();
+    print_subsets(m_subsets[0], m_subsets[1]);
     /// print initial cut size
-    std::cout << calculate_cut(m_subsets[0]) << std::endl;
-    /// step 2
+    /// save initial cut size for algorithm report
+    const auto initial_cut_size = calculate_cut(m_subsets[0]);
+
     while (true) {
         for (unsigned i = 0; i < m_subsets.size(); ++i) {
             std::sort(m_subsets[i].begin(), m_subsets[i].end(),
                     [this] (Vertex* vert1, Vertex* vert2) -> bool
                     {
-                        return internal_cost(vert1) > internal_cost(vert2);
+                        return vert1->internal_cost() > vert2->internal_cost();
                     });
         }
 
@@ -53,11 +59,11 @@ void kernigan_lin::run_partition()
             max_gain = max_gain + gain_vector[i];
         }
         if (max_gain_index == 0) {
+            report_algorithm_result(initial_cut_size, calculate_cut(m_subsets[0]), "KL");
             return;
         }
         accept_moves(max_gain_index);
-        std::cout << calculate_cut(m_subsets[0]) << std::endl;
-        print_subsets();
+        print_subsets(m_subsets[0], m_subsets[1]);
     }
 }
 
@@ -68,19 +74,7 @@ void kernigan_lin::accept_moves(int index)
     }
 }
 
-void kernigan_lin::print_subsets() const
-{
-    for (const auto& it: m_subsets[0]) {
-        std::cout <<it->m_name << " l" << it->get_label() << ' ';
-    }
-    std::cout<<std::endl;
-    for (const auto& it: m_subsets[1]) {
-        std::cout <<it->m_name << " l" << it->get_label() << ' ';
-    }
-    std::cout<<std::endl;
-}
-
 int kernigan_lin::reduction(Vertex* vert1, Vertex* vert2) const
 {
-    return moveing_cost(vert1) + moveing_cost(vert2) - 2 * m_graph->get_weight(vert1, vert2);
+    return vert1->moveing_cost() + vert2->moveing_cost() - 2 * m_graph->get_weight(vert1, vert2);
 }

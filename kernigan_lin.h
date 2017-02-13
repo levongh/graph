@@ -27,8 +27,6 @@ private:
 
     void accept_moves(int index);
 
-    void print_subsets() const;
-
 private:
     std::vector<std::vector<Vertex*> > m_subsets;
 };
