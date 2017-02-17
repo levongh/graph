@@ -1,10 +1,9 @@
 #include <iostream>
 #include <iomanip>
 
-#include "graph_input.h"
 #include "graph.h"
-#include "kernigan_lin.h"
-#include "fiduccia_mattheyses.h"
+#include "graph_input.h"
+#include "partition_manager.h"
 
 int main(int argc, char** argv)
 {
@@ -26,20 +25,19 @@ int main(int argc, char** argv)
         //input_config.parse();
     }
     tmp->print();
-    std::cout<< std::endl;
-    std::cout<< std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
 
-    //graph_partition* kl_part = new kernigan_lin(tmp);
-    graph_partition* fm_part = new fiduccia_mattheyses(tmp);
+    auto mgr = partition_manager::get_instance();
 
-    std::cout<< std::endl;
-    std::cout<< std::endl;
+    auto fm_part = mgr->create_algorithm(partition_type::FETUCCIA_MATEISIS, tmp);
 
-    //kl_part->run_partition();
+    std::cout << std::endl;
+    std::cout << std::endl;
+
     fm_part->run_partition();
 
-    //delete kl_part;
-    delete fm_part;
+    partition_manager::remove_instance();
     delete tmp;
     return 0;
 }

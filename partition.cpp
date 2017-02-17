@@ -1,9 +1,6 @@
 #include "partition.h"
 #include "graph.h"
 
-partition_manager* partition_manager::s_instance = nullptr;
-std::mutex partition_manager::s_mutex;
-
 int graph_partition::calculate_cut(const std::vector<Vertex*>& set) const
 {
     unsigned result = 0;
@@ -31,18 +28,3 @@ void graph_partition::print_subsets(const std::vector<Vertex*>& first, const std
 }
 
 
-partition_manager* partition_manager::get_instance()
-{
-    std::lock_guard<std::mutex> lcok(s_mutex);
-    if (nullptr != s_instance) {
-        s_instance = new partition_manager();
-    }
-    return s_instance;
-}
-
-void partition_manager::remove_instance()
-{
-    std::lock_guard<std::mutex> lcok(s_mutex);
-    delete s_instance;
-    s_instance = nullptr;
-}
