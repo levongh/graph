@@ -52,7 +52,7 @@ void kernigan_lin::run_partition()
         /// do calculation and accept/or decline moveing
         int max_gain_index = -1;
         unsigned max_gain = 0;
-        for (int i = 0; i < gain_vector.size(); ++i) {
+        for (unsigned int i = 0; i < gain_vector.size(); ++i) {
             if (max_gain + gain_vector[i] > max_gain) {
                 max_gain_index = i;
             }

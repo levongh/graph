@@ -125,7 +125,7 @@ public:
     /// @brief returns the weight of specified edge
     unsigned get_weight(Vertex* vert1, Vertex* vert2);
 
-    /// @brief returns thw index from name of vetex
+    /// @brief returns the index from name of vetex
     /// @brief index refers to vertex number in the graph
     unsigned int get_index(const unsigned name) const;
 
@@ -160,6 +160,5 @@ private:
     std::map<unsigned, Vertex*> work;
     unsigned int m_numvertexes;
     std::vector<unsigned> m_vertexes;
-    //std::vector<Edge*> m_edges;
     std::set<Edge*, edge_compare> m_edges;
 };
