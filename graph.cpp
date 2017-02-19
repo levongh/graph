@@ -2,6 +2,7 @@
 #include <queue>
 #include <algorithm>
 #include <limits>
+#include <fstream>
 
 #include "graph.h"
 
@@ -280,4 +281,11 @@ void Graph::print() const
     for (const auto& iter : work) {
         iter.second->print();
     }
+}
+
+void Graph::print_partition(std::ofstream& output_file) const
+{
+     for (const auto& iter : work) {
+         output_file << iter.second->get_label() << '\n';
+     }
 }

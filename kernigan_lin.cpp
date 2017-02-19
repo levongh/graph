@@ -25,10 +25,11 @@ void kernigan_lin::run_partition()
     std::cout << "KL algorithm starting ..." <<std::endl;
     /// step 1
     initial_partition(m_subsets[0], m_subsets[1]);
-    print_subsets(m_subsets[0], m_subsets[1]);
+    //print_subsets(m_subsets[0], m_subsets[1]);
     /// print initial cut size
     /// save initial cut size for algorithm report
     const auto initial_cut_size = calculate_cut(m_subsets[0]);
+    std::cout << calculate_cut(m_subsets[0]) <<std::endl;;
 
     while (true) {
         for (unsigned i = 0; i < m_subsets.size(); ++i) {
@@ -60,11 +61,15 @@ void kernigan_lin::run_partition()
         }
         if (max_gain_index == 0) {
             report_algorithm_result(initial_cut_size, calculate_cut(m_subsets[0]), "KL");
-            return;
+            break;
         }
         accept_moves(max_gain_index);
-        print_subsets(m_subsets[0], m_subsets[1]);
+        calculate_cut(m_subsets[0]);
+        std::cout << calculate_cut(m_subsets[0]) <<std::endl;;
+        //print_subsets(m_subsets[0], m_subsets[1]);
     }
+    print_subsets(m_subsets[0], m_subsets[1]);
+    write_graph();
 }
 
 void kernigan_lin::accept_moves(int index)

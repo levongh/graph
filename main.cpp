@@ -24,18 +24,19 @@ int main(int argc, char** argv)
         //reader::read_config input_config(argc[2]);
         //input_config.parse();
     }
-    tmp->print();
+    //tmp->print();
     std::cout << std::endl;
     std::cout << std::endl;
 
     auto mgr = partition_manager::get_instance();
 
-    auto fm_part = mgr->create_algorithm(partition_type::FETUCCIA_MATEISIS, tmp);
+    //auto part = mgr->create_algorithm(partition_type::FETUCCIA_MATEISIS, tmp);
+    auto part = mgr->create_algorithm(partition_type::KERNIGAN_LIN, tmp);
 
     std::cout << std::endl;
     std::cout << std::endl;
 
-    fm_part->run_partition();
+    part->run_partition();
 
     partition_manager::remove_instance();
     delete tmp;
