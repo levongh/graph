@@ -2,6 +2,7 @@
 #include <iomanip>
 
 #include "graph.h"
+#include "timer.h"
 #include "graph_input.h"
 #include "partition_manager.h"
 
@@ -30,8 +31,9 @@ int main(int argc, char** argv)
 
     auto mgr = partition_manager::get_instance();
 
-    //auto part = mgr->create_algorithm(partition_type::FETUCCIA_MATEISIS, tmp);
-    auto part = mgr->create_algorithm(partition_type::KERNIGAN_LIN, tmp);
+    timer monitoring;
+    auto part = mgr->create_algorithm(partition_type::FETUCCIA_MATEISIS, tmp);
+    //auto part = mgr->create_algorithm(partition_type::KERNIGAN_LIN, tmp);
 
     std::cout << std::endl;
     std::cout << std::endl;

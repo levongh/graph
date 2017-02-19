@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <chrono>
 
 #include "kernigan_lin.h"
 #include "graph.h"
@@ -64,11 +65,9 @@ void kernigan_lin::run_partition()
             break;
         }
         accept_moves(max_gain_index);
-        calculate_cut(m_subsets[0]);
+        //calculate_cut(m_subsets[0]);
         std::cout << calculate_cut(m_subsets[0]) <<std::endl;;
-        //print_subsets(m_subsets[0], m_subsets[1]);
     }
-    print_subsets(m_subsets[0], m_subsets[1]);
     write_graph();
 }
 
