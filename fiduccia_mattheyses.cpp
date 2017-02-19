@@ -14,7 +14,7 @@ void fiduccia_mattheyses::init_gains()
     while (!buckets.empty()) {
         Vertex* highest = (*buckets.begin()).second;
         buckets.erase(buckets.begin());
-        if (highest->moveing_cost() < 0) {
+        if (highest->moveing_cost() > 0) {
             move_vertex(highest);
         }
     }
@@ -40,5 +40,6 @@ void fiduccia_mattheyses::run_partition()
     std::cout << "FM algorithm starting ..." <<std::endl;
     initial_partition(m_buckets[0], m_buckets[1]);
     init_gains();
+    write_graph();
 }
 

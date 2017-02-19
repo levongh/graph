@@ -1,7 +1,7 @@
 CC = g++
-CPPFLAGS = -O1 -std=c++14 -Wall -g
-HEADERS = graph.h partition.h kernigan_lin.h graph_input.h fiduccia_mattheyses.h partition_manager.h
-SOURCES = graph.cpp partition.cpp main.cpp kernigan_lin.cpp graph_input.cpp fiduccia_mattheyses.cpp partition_manager.cpp
+CPPFLAGS = -O1 -std=c++14 -Wall -Werror -g
+HEADERS = graph.h partition.h kernigan_lin.h fiduccia_mattheyses.h partition_manager.h graph_input.h
+SOURCES = graph.cpp partition.cpp main.cpp kernigan_lin.cpp  fiduccia_mattheyses.cpp partition_manager.cpp graph_input.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)
 EXECUTABLE = graph_project

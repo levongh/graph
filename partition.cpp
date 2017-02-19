@@ -1,3 +1,5 @@
+#include <fstream>
+
 #include "partition.h"
 #include "graph.h"
 
@@ -27,4 +29,8 @@ void graph_partition::print_subsets(const std::vector<Vertex*>& first, const std
     std::cout<<std::endl;
 }
 
-
+void graph_partition::write_graph() const
+{
+    std::ofstream out_file("after_part.txt", std::ofstream::out);
+    m_graph->print_partition(out_file);
+}

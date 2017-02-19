@@ -155,6 +155,9 @@ public:
     /// @brief
     void initialize_buckets(std::multimap<int, Vertex*, std::greater<int> >& buckets);
 
+    /// @brief
+    void print_partition(std::ofstream& output_file) const;
+
 private:
     /// @brief stores the map from name of vertex to Vertex class
     std::map<unsigned, Vertex*> work;

@@ -90,7 +90,10 @@ protected:
     /// @brief returns the cutsize
     int calculate_cut(const std::vector<Vertex*>& set) const;
 
+    /// @brief helper function to check subsets
     void print_subsets(const std::vector<Vertex*>& first, const std::vector<Vertex*>& second) const;
+
+    void write_graph() const;
 
 protected:
     Graph* m_graph;
