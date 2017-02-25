@@ -141,7 +141,10 @@ public:
     void mst_kruskal();
 
     /// @brief implements BFS algorithm
-    void BFS(const unsigned );
+    void BFS(const unsigned source);
+
+    /// @brief implements DFS algorithm
+    void DFS(const unsigned source);
 
     /// @brief add new vertex to graph
     void add_vertex(const unsigned name);
@@ -157,6 +160,10 @@ public:
 
     /// @brief
     void print_partition(std::ofstream& output_file) const;
+
+    unsigned get_vertex_count() const;
+
+    Vertex* get_vertex(unsigned index) const;
 
 private:
     /// @brief stores the map from name of vertex to Vertex class

@@ -131,14 +131,14 @@ void Graph::add_edge(const unsigned from, const unsigned to, double cost)
     from_v->m_adj.push_back(std::make_pair(cost, to_v));
 }
 
-void Graph::BFS(const unsigned s){
+void Graph::BFS(const unsigned source){
     std::queue<unsigned> q;
     bool* visited = new bool[m_numvertexes];
     for(unsigned int i = 0; i < m_numvertexes; ++i) {
         visited[i] = false;
     }
-    visited[get_index(s)] = true;
-    q.push(s);
+    visited[get_index(source)] = true;
+    q.push(source);
     std::vector<std::pair<int, Vertex*> >::iterator iter;
     while(!q.empty()){
         unsigned str = q.front();
@@ -152,7 +152,12 @@ void Graph::BFS(const unsigned s){
             }
         }
     }
-    std::cout << "end";
+    std::cout << "end" << std::endl;;
+}
+
+void Graph::DFS(const unsigned source)
+{
+
 }
 
 namespace {
@@ -203,6 +208,16 @@ void Graph::mst_kruskal()
         std::cout << e->m_vertex1->m_name << " -- "
              << e->m_vertex2->m_name << "  " << e->m_weight << std::endl;
     }
+}
+
+unsigned Graph::get_vertex_count() const
+{
+    return m_numvertexes;
+}
+
+Vertex* Graph::get_vertex(unsigned index) const
+{
+    return (*work.find(index)).second;
 }
 
 void Graph::mst_prim(const unsigned root)

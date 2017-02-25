@@ -10,8 +10,8 @@ enum class partition_type
 {
     KERNIGAN_LIN,
     FETUCCIA_MATEISIS,
-    K_WAY,
-    SIMULATED_ANNEALING
+    SIMULATED_ANNEALING,
+    K_WAY
 };
 
 
