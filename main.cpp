@@ -26,14 +26,19 @@ int main(int argc, char** argv)
         //input_config.parse();
     }
     //tmp->print();
+    if (tmp == nullptr) {
+        return 1;
+    }
     std::cout << std::endl;
     std::cout << std::endl;
+
 
     auto mgr = partition_manager::get_instance();
 
     timer monitoring;
-    auto part = mgr->create_algorithm(partition_type::FETUCCIA_MATEISIS, tmp);
+    //auto part = mgr->create_algorithm(partition_type::FETUCCIA_MATEISIS, tmp);
     //auto part = mgr->create_algorithm(partition_type::KERNIGAN_LIN, tmp);
+    auto part = mgr->create_algorithm(partition_type::SIMULATED_ANNEALING, tmp);
 
     std::cout << std::endl;
     std::cout << std::endl;

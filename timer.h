@@ -11,7 +11,7 @@ public:
     ~timer()
     {
         std::cout << "Time: " <<
-            std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - m_start).count()
+            std::chrono::duration<double>(std::chrono::high_resolution_clock::now() - m_start).count()
             << std::endl;
     }
 

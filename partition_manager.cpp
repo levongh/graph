@@ -27,6 +27,9 @@ graph_partition* partition_manager::create_algorithm(partition_type pt, Graph* G
     } else if (pt == partition_type::FETUCCIA_MATEISIS) {
         part_algorithms.push_back(new fiduccia_mattheyses{G});
         return part_algorithms.back();
+    } else if (pt == partition_type::SIMULATED_ANNEALING) {
+        part_algorithms.push_back(new simulated_annealing{G});
+        return part_algorithms.back();
     } else {
         return nullptr;
     }

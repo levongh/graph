@@ -1,6 +1,8 @@
 #pragma once
+
 #include "kernigan_lin.h"
 #include "fiduccia_mattheyses.h"
+#include "simulated_annealing.h"
 
 /// @brief manager for partition alforithm creation
 /// @brief should work like builder pattern
