@@ -16,6 +16,17 @@ double simulated_annealing::calculate_move(unsigned int index)
     return to_move->moveing_cost();
 }
 
+simulated_annealing::simulated_annealing(Graph* G, partition_config config)
+    : graph_partition{G, config}
+    , m_temperature{std::numeric_limits<unsigned int>::max()}
+    , m_counter{0}
+    , m_vertex_count{m_graph->get_vertex_count()}
+    , m_cut_size{0}
+    , m_annealing_type{annealing_type::FAST_ANNEALING}
+    , m_subsets{config.get_partition_count()}
+{
+}
+
 void simulated_annealing::apply_move(Vertex* to_move)
 {
     if (to_move->get_label() == 0) {
@@ -30,9 +41,9 @@ void simulated_annealing::shedule_annealing()
     switch(m_annealing_type)
     {
         case annealing_type::FAST_ANNEALING:
-            m_temperature = m_temperature / (m_counter + 1);
+            m_temperature = m_temperature / 1.02;
         case annealing_type::DETAILD_ANNEALING:
-            m_temperature = m_temperature / 0.95;
+            m_temperature = m_temperature / 1.0095;
     }
 }
 
@@ -64,5 +75,6 @@ void simulated_annealing::run_partition()
         mutate();
         ++m_counter;
     }
+    write_graph();
     std::cout << " Optimized cut size is: " << m_cut_size << std::endl;
 }

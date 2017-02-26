@@ -12,8 +12,7 @@
 #include <limits>
 #include "partition.h"
 
-#include "graph.h"
-
+class Graph;
 
 enum class annealing_type
 {
@@ -25,16 +24,7 @@ enum class annealing_type
 class simulated_annealing : public graph_partition
 {
 public:
-    simulated_annealing(Graph* G, partition_config config = partition_config())
-        : graph_partition{G, config}
-        , m_temperature{std::numeric_limits<unsigned int>::max()}
-        , m_counter{0}
-        , m_vertex_count{m_graph->get_vertex_count()}
-        , m_cut_size{0}
-        , m_annealing_type{annealing_type::FAST_ANNEALING}
-        , m_subsets{config.get_partition_count()}
-    {
-    }
+    simulated_annealing(Graph* G, partition_config config = partition_config());
 
     virtual void run_partition() override;
 
