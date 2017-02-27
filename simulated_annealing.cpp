@@ -23,7 +23,7 @@ simulated_annealing::simulated_annealing(Graph* G, partition_config config)
     , m_annealing_type{annealing_type::FAST_ANNEALING}
     , m_device{}
     , m_engine{m_device()}
-    , m_distribution{0, m_vertex_count}
+    , m_distribution{1, m_vertex_count}
     , m_subsets{config.get_partition_count()}
 {
 }
