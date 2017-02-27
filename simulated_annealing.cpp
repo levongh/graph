@@ -1,5 +1,3 @@
-#include <cmath>
-#include <cstdlib>
 
 #include "simulated_annealing.h"
 #include "graph.h"
@@ -23,6 +21,9 @@ simulated_annealing::simulated_annealing(Graph* G, partition_config config)
     , m_vertex_count{m_graph->get_vertex_count()}
     , m_cut_size{0}
     , m_annealing_type{annealing_type::FAST_ANNEALING}
+    , m_device{}
+    , m_engine{m_device()}
+    , m_distribution{0, m_vertex_count}
     , m_subsets{config.get_partition_count()}
 {
 }
@@ -49,15 +50,16 @@ void simulated_annealing::shedule_annealing()
 
 void simulated_annealing::mutate()
 {
-    int index = std::rand() % (m_vertex_count - 1) + 1;
+    int index = m_distribution(m_engine);
     auto to_move = m_graph->get_vertex(index);
     auto cut_reduction = to_move->moveing_cost();
-    if (cut_reduction < 0) {
+    if (cut_reduction > 0) {
         apply_move(to_move);
         m_cut_size = m_cut_size - cut_reduction;
     } else {
         double p = std::exp((m_cut_size - cut_reduction) / m_temperature);
-        if (std::rand() % 100 < p * 100) {
+        std::uniform_int_distribution<unsigned> dist{0, 100};
+        if (dist(m_engine) < p * 100) {
             apply_move(to_move);
             m_cut_size = m_cut_size - cut_reduction;
         }
