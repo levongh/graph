@@ -10,6 +10,8 @@
  */
 
 #include <limits>
+#include <random>
+
 #include "partition.h"
 
 class Graph;
@@ -44,5 +46,8 @@ private:
     unsigned int m_vertex_count;
     double m_cut_size;
     annealing_type m_annealing_type;
+    std::random_device m_device;
+    std::mt19937 m_engine;
+    std::uniform_int_distribution<unsigned> m_distribution;
     std::vector<std::vector<Vertex*> > m_subsets;
 };
