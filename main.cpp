@@ -25,13 +25,12 @@ int main(int argc, char** argv)
         //reader::read_config input_config(argc[2]);
         //input_config.parse();
     }
-    //tmp->print();
+    tmp->print();
     if (tmp == nullptr) {
         return 1;
     }
     std::cout << std::endl;
     std::cout << std::endl;
-
 
     auto mgr = partition_manager::get_instance();
 
