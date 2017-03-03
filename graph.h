@@ -167,7 +167,7 @@ public:
 
 private:
     /// @brief stores the map from name of vertex to Vertex class
-    std::map<unsigned, Vertex*> work;
+    std::map<unsigned, Vertex*> m_work;
     unsigned int m_numvertexes;
     std::vector<unsigned> m_vertexes;
     std::set<Edge*, edge_compare> m_edges;

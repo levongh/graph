@@ -1,5 +1,6 @@
 #include <iostream>
 #include <queue>
+#include <stack>
 #include <algorithm>
 #include <limits>
 #include <fstream>
@@ -71,7 +72,7 @@ unsigned Graph::get_weight(Vertex* vert1, Vertex* vert2)
 void Graph::initial_partition(std::vector<Vertex*>& label_1, std::vector<Vertex*>& label_2)
 {
     const auto pivot = m_numvertexes/2;
-    auto vert_iter = work.begin();
+    auto vert_iter = m_work.begin();
     for (unsigned  i = 0; i < pivot; ++i) {
         vert_iter->second->set_label(0);
         label_1.push_back(vert_iter->second);
@@ -86,7 +87,7 @@ void Graph::initial_partition(std::vector<Vertex*>& label_1, std::vector<Vertex*
 
 void Graph::initialize_buckets(std::multimap<int, Vertex*, std::greater<int> >& buckets)
 {
-    for (const auto& iter : work) {
+    for (const auto& iter : m_work) {
         buckets.insert(std::make_pair(iter.second->internal_cost(), iter.second));
     }
 }
@@ -104,8 +105,8 @@ unsigned int Graph::get_index(const unsigned temp) const
 
 void Graph::add_vertex(const unsigned name)
 {
-    if (work.find(name) == work.end()) {
-        work[name] = new Vertex(name);
+    if (m_work.find(name) == m_work.end()) {
+        m_work[name] = new Vertex(name);
         m_vertexes.push_back(name);
         ++m_numvertexes;
         return;
@@ -115,14 +116,14 @@ void Graph::add_vertex(const unsigned name)
 
 void Graph::add_edge(const unsigned from, const unsigned to, double cost)
 {
-    auto iter = work.find(from);
-    if (iter == work.end()) {
+    auto iter = m_work.find(from);
+    if (iter == m_work.end()) {
         std::cout << "\n Vertex '" << from <<"' doesn't exist!";
         return;
     }
     Vertex* from_v = iter->second;
-    iter = work.find(to);
-    if (iter == work.end()){
+    iter = m_work.find(to);
+    if (iter == m_work.end()){
         std::cout << "\n Vertex '" << to << "' doesn't exist!";
         return;
     }
@@ -145,7 +146,7 @@ void Graph::BFS(const unsigned source){
         std::cout << str << "->";
         q.pop();
 
-        for(iter = work[str]->m_adj.begin(); iter != work[str]->m_adj.end(); ++iter){
+        for(iter = m_work[str]->m_adj.begin(); iter != m_work[str]->m_adj.end(); ++iter){
             if(!visited[get_index(iter->second->m_name)]){
                 visited[get_index(iter->second->m_name)] = true;
                 q.push(iter->second->m_name);
@@ -153,10 +154,33 @@ void Graph::BFS(const unsigned source){
         }
     }
     std::cout << "end" << std::endl;;
+    delete []visited;
 }
 
 void Graph::DFS(const unsigned source)
 {
+    std::stack<unsigned> q;
+    bool* visited = new bool[m_numvertexes];
+    for(unsigned int i = 0; i < m_numvertexes; ++i) {
+        visited[i] = false;
+    }
+    visited[get_index(source)] = true;
+    q.push(source);
+    std::vector<std::pair<int, Vertex*> >::iterator iter;
+    while(!q.empty()){
+        unsigned str = q.top();
+        std::cout << str << "->";
+        q.pop();
+
+        for(iter = m_work[str]->m_adj.begin(); iter != m_work[str]->m_adj.end(); ++iter){
+            if(!visited[get_index(iter->second->m_name)]){
+                visited[get_index(iter->second->m_name)] = true;
+                q.push(iter->second->m_name);
+            }
+        }
+    }
+    std::cout << "end" << std::endl;;
+    delete []visited;
 
 }
 
@@ -184,7 +208,7 @@ void Graph::mst_kruskal()
     std::vector<Edge*> res;
 
     for (unsigned int i = 0; i < m_vertexes.size(); ++i) {
-        Vertex* c = work[m_vertexes[i]];
+        Vertex* c = m_work[m_vertexes[i]];
         PARENT[c] = c;
         RANK[c] = 0;
     }
@@ -217,7 +241,7 @@ unsigned Graph::get_vertex_count() const
 
 Vertex* Graph::get_vertex(unsigned index) const
 {
-    return (*work.find(index)).second;
+    return (*m_work.find(index)).second;
 }
 
 void Graph::mst_prim(const unsigned root)
@@ -227,15 +251,15 @@ void Graph::mst_prim(const unsigned root)
     std::map<Vertex*, int> KEY;
 
     for (auto c : m_vertexes) {
-        PARENT[work[c]] = nullptr;
-        KEY[work[c]] = std::numeric_limits<int>::max();
+        PARENT[m_work[c]] = nullptr;
+        KEY[m_work[c]] = std::numeric_limits<int>::max();
     }
-    KEY[work[root]] = 0;
+    KEY[m_work[root]] = 0;
     std::vector<unsigned> Q = m_vertexes;
 
     while (!Q.empty()) {
-        unsigned temp = *std::min_element(Q.begin(), Q.end(), [&](unsigned x, unsigned y) {return KEY[work[x]] < KEY[work[y]];});
-        Vertex *u= work[temp];
+        unsigned temp = *std::min_element(Q.begin(), Q.end(), [&](unsigned x, unsigned y) {return KEY[m_work[x]] < KEY[m_work[y]];});
+        Vertex *u= m_work[temp];
         auto iter = std::remove(Q.begin(), Q.end(), temp);
         Q.erase(iter, Q.end());
         if (PARENT[u] != nullptr) {
@@ -269,7 +293,7 @@ std::map<unsigned, std::pair<int, unsigned> > Graph::Dijkstra(const unsigned sta
 
     weights[start] = 0;
 
-    Q.push(std::make_pair(0, work[start]));
+    Q.push(std::make_pair(0, m_work[start]));
     std::pair<int, Vertex*> currentNode;
     while (!Q.empty()) {
         currentNode = Q.top();
@@ -293,14 +317,14 @@ std::map<unsigned, std::pair<int, unsigned> > Graph::Dijkstra(const unsigned sta
 
 void Graph::print() const
 {
-    for (const auto& iter : work) {
+    for (const auto& iter : m_work) {
         iter.second->print();
     }
 }
 
 void Graph::print_partition(std::ofstream& output_file) const
 {
-     for (const auto& iter : work) {
+     for (const auto& iter : m_work) {
          output_file << iter.second->get_label() << '\n';
      }
 }

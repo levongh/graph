@@ -59,7 +59,7 @@ void simulated_annealing::mutate()
     } else {
         double p = std::exp((m_cut_size - cut_reduction) / m_temperature);
         std::uniform_int_distribution<unsigned> dist{0, 100};
-        if (dist(m_engine) < p * 100) {
+        if (dist(m_engine) < p) {
             apply_move(to_move);
             m_cut_size = m_cut_size - cut_reduction;
         }
