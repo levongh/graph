@@ -134,10 +134,7 @@ void Graph::add_edge(const unsigned from, const unsigned to, double cost)
 
 void Graph::BFS(const unsigned source){
     std::queue<unsigned> q;
-    bool* visited = new bool[m_numvertexes];
-    for(unsigned int i = 0; i < m_numvertexes; ++i) {
-        visited[i] = false;
-    }
+    std::vector<bool> visited(m_numvertexes, false);
     visited[get_index(source)] = true;
     q.push(source);
     std::vector<std::pair<int, Vertex*> >::iterator iter;
@@ -154,16 +151,12 @@ void Graph::BFS(const unsigned source){
         }
     }
     std::cout << "end" << std::endl;;
-    delete []visited;
 }
 
 void Graph::DFS(const unsigned source)
 {
     std::stack<unsigned> q;
-    bool* visited = new bool[m_numvertexes];
-    for(unsigned int i = 0; i < m_numvertexes; ++i) {
-        visited[i] = false;
-    }
+    std::vector<bool> visited(m_numvertexes, false);
     visited[get_index(source)] = true;
     q.push(source);
     std::vector<std::pair<int, Vertex*> >::iterator iter;
@@ -180,8 +173,6 @@ void Graph::DFS(const unsigned source)
         }
     }
     std::cout << "end" << std::endl;;
-    delete []visited;
-
 }
 
 namespace {
