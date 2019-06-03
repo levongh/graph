@@ -37,8 +37,8 @@ public:
     /// @brief function to sum up vertex external cost
     int external_cost() const;
 
-    /// @brief function to sum up moveing cost
-    int moveing_cost() const;
+    /// @brief function to sum up move cost
+    int move_cost() const;
 
     void print() const;
 

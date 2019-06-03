@@ -51,7 +51,7 @@ void kernigan_lin::run_partition()
             ++iter1;
             ++iter2;
         }
-        /// do calculation and accept/or decline moveing
+        /// do calculation and accept/or decline move
         int max_gain_index = -1;
         unsigned max_gain = 0;
         for (unsigned int i = 0; i < gain_vector.size(); ++i) {
@@ -80,5 +80,5 @@ void kernigan_lin::accept_moves(int index)
 
 int kernigan_lin::reduction(Vertex* vert1, Vertex* vert2) const
 {
-    return vert1->moveing_cost() + vert2->moveing_cost() - 2 * m_graph->get_weight(vert1, vert2);
+    return vert1->move_cost() + vert2->move_cost() - 2 * m_graph->get_weight(vert1, vert2);
 }

@@ -11,7 +11,7 @@ const unsigned int ITERATION_NUMBER = 100;
 double simulated_annealing::calculate_move(unsigned int index)
 {
     auto to_move = m_graph->get_vertex(index);
-    return to_move->moveing_cost();
+    return to_move->move_cost();
 }
 
 simulated_annealing::simulated_annealing(Graph* G, partition_config config)
@@ -52,7 +52,7 @@ void simulated_annealing::mutate()
 {
     int index = m_distribution(m_engine);
     auto to_move = m_graph->get_vertex(index);
-    auto cut_reduction = to_move->moveing_cost();
+    auto cut_reduction = to_move->move_cost();
     if (cut_reduction > 0) {
         apply_move(to_move);
         m_cut_size = m_cut_size - cut_reduction;
