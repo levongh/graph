@@ -30,7 +30,7 @@ int Vertex::external_cost() const
     return result;
 }
 
-int Vertex::moveing_cost() const
+int Vertex::move_cost() const
 {
     return external_cost() - internal_cost();
 }

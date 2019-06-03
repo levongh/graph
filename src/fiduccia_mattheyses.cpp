@@ -14,7 +14,7 @@ void fiduccia_mattheyses::init_gains()
     while (!buckets.empty()) {
         Vertex* highest = (*buckets.begin()).second;
         buckets.erase(buckets.begin());
-        if (highest->moveing_cost() > 0) {
+        if (highest->move_cost() > 0) {
             move_vertex(highest);
         }
     }
