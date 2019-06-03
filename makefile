@@ -1,22 +1,24 @@
 CC = g++
-CPPFLAGS = -O0 -std=c++14 -Wall -Werror -g
-HEADERS = graph.h partition.h kernigan_lin.h fiduccia_mattheyses.h partition_manager.h graph_input.h timer.h simulated_annealing.h
-SOURCES = graph.cpp partition.cpp main.cpp kernigan_lin.cpp  fiduccia_mattheyses.cpp partition_manager.cpp graph_input.cpp simulated_annealing.cpp
+SUBDIRS    = src
+OBJDIR     = obj
+BINDIR     = bin
+OBJECTS    = $(SOURCES:.cpp:=.o)
+EXECUTABLE = grap_partitioning
+CPPFLAGS   = -O3 -std=c++14 -Wall -Werror
+LIBS       = -lpthread
 
-VPATH = task_sheduler
+MOVED_OBJECTS =  $(addprefix $(OBJDIR)/, $(OBJECTS))
 
-OBJECTS = $(SOURCES:.cpp=.o)
-EXECUTABLE = graph_project
+.PHONY : all clean
 
-all: $(EXECUTABLE)
-
-$(EXECUTABLE): $(OBJECTS) $(HEADERS)
-	$(CC) $(OBJECTS) -o $@
-
-$(OBJECTS): $(HEADERS)
-
-%.o : %.cpp
-	$(CC) $(CPPFLAGS) $(SOURCES) -c
+all: $(OBJECTS)
+	mkdir -p $(OBJDIR)
+	mkdir -p $(BINDIR)
+	$(foreach subdir, $(SUBDIRS), cd $(subdir); make all; cd ../;)
+	$(CC) $(OBJDIR)/* $(LIBS) -o $(EXECUTABLE)
+	mv $(EXECUTABLE) $(BINDIR)
 
 clean:
-	rm -rf $(EXECUTABLE) $(OBJECTS)
+	rm -rf $(BINDIR) $(OBJDIR)
+	$(foreach subdir,$(SUBDIRS), cd $(subdir); make clean; cd ../;)
+
