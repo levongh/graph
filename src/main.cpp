@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <memory>
 
 #include "graph.h"
 #include "timer.h"
@@ -8,7 +9,7 @@
 
 int main(int argc, char** argv)
 {
-    Graph* tmp = nullptr;
+    std::shared_ptr<Graph> tmp = nullptr;
     if (argc == 1) {
         std::cout << std::setfill('_') << std::setw(57) << '\n'
                   << "|Usage: for programm correct working you sould provide |" << '\n'
@@ -18,7 +19,7 @@ int main(int argc, char** argv)
         return 1;
     } else if (argc == 2) {
         reader::read_graph input_parser(argv[1]);
-        tmp = input_parser.parse();
+        tmp.reset(input_parser.parse());
     } else if (argc == 3) {
         reader::read_graph input_parser(argv[1]);
         input_parser.parse();
@@ -32,19 +33,18 @@ int main(int argc, char** argv)
     std::cout << std::endl;
     std::cout << std::endl;
 
-    auto mgr = partition_manager::get_instance();
+    //auto mgr = partition_manager::get_instance();
 
-    timer monitoring;
+    //timer monitoring;
     //auto part = mgr->create_algorithm(partition_type::FETUCCIA_MATEISIS, tmp);
     //auto part = mgr->create_algorithm(partition_type::KERNIGAN_LIN, tmp);
-    auto part = mgr->create_algorithm(partition_type::SIMULATED_ANNEALING, tmp);
+    //auto part = mgr->create_algorithm(partition_type::SIMULATED_ANNEALING, tmp);
 
-    std::cout << std::endl;
-    std::cout << std::endl;
+    //std::cout << std::endl;
+    //std::cout << std::endl;
 
-    part->run_partition();
+    //part->run_partition();
 
-    partition_manager::remove_instance();
-    delete tmp;
+    //partition_manager::remove_instance();
     return 0;
 }
