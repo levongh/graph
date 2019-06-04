@@ -42,9 +42,20 @@ public:
 
     void print() const;
 
-//private:
-    std::vector<std::pair<int, Vertex*> > m_adj;
+    const std::vector<std::pair<int, Vertex*>>& get_adjacent() const
+    {
+        return m_adj;
+    }
+
+    void add_adjecent(std::pair<int, Vertex*>&& adj)
+    {
+        m_adj.push_back(adj);
+    }
+
     unsigned m_name;
+
+private:
+    std::vector<std::pair<int, Vertex*> > m_adj;
 
 private:
     unsigned short m_label;
