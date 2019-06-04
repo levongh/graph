@@ -27,11 +27,11 @@ int main(int argc, char** argv)
         //input_config.parse();
     }
     tmp->print();
-    if (tmp == nullptr) {
-        return 1;
-    }
     std::cout << std::endl;
-    std::cout << std::endl;
+    std::cout << "BFS" << std::endl;
+    tmp->BFS(3);
+    std::cout << "DFS" << std::endl;
+    tmp->DFS(3);
 
     //auto mgr = partition_manager::get_instance();
 

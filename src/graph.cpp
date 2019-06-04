@@ -129,24 +129,24 @@ void Graph::add_edge(const unsigned from, const unsigned to, double cost)
     }
     Vertex* to_v = iter->second;
     m_edges.insert(new Edge(from_v, to_v, cost));
-    from_v->m_adj.push_back(std::make_pair(cost, to_v));
+    from_v->add_adjecent(std::move(std::make_pair(cost, to_v)));
 }
 
-void Graph::BFS(const unsigned source){
+void Graph::BFS(const unsigned source)
+{
     std::queue<unsigned> q;
     std::vector<bool> visited(m_numvertexes, false);
     visited[get_index(source)] = true;
     q.push(source);
-    std::vector<std::pair<int, Vertex*> >::iterator iter;
     while(!q.empty()){
         unsigned str = q.front();
         std::cout << str << "->";
         q.pop();
 
-        for(iter = m_work[str]->m_adj.begin(); iter != m_work[str]->m_adj.end(); ++iter){
-            if(!visited[get_index(iter->second->m_name)]){
-                visited[get_index(iter->second->m_name)] = true;
-                q.push(iter->second->m_name);
+        for(const auto& iter : m_work[str]->get_adjacent()) {
+            if(!visited[get_index(iter.second->m_name)]){
+                visited[get_index(iter.second->m_name)] = true;
+                q.push(iter.second->m_name);
             }
         }
     }
@@ -165,10 +165,10 @@ void Graph::DFS(const unsigned source)
         std::cout << str << "->";
         q.pop();
 
-        for(iter = m_work[str]->m_adj.begin(); iter != m_work[str]->m_adj.end(); ++iter){
-            if(!visited[get_index(iter->second->m_name)]){
-                visited[get_index(iter->second->m_name)] = true;
-                q.push(iter->second->m_name);
+        for(const auto& iter : m_work[str]->get_adjacent()) {
+            if(!visited[get_index(iter.second->m_name)]){
+                visited[get_index(iter.second->m_name)] = true;
+                q.push(iter.second->m_name);
             }
         }
     }
@@ -257,7 +257,7 @@ void Graph::mst_prim(const unsigned root)
             res[u] = PARENT[u];
         }
 
-        for(const auto& v : u->m_adj ){
+        for(const auto& v : u->get_adjacent()){
             if (std::find(Q.begin(), Q.end(), (v.second)->m_name)!= Q.end()){
                 if(v.first < KEY[v.second]){
                     PARENT[v.second] = u;
@@ -290,7 +290,7 @@ std::map<unsigned, std::pair<int, unsigned> > Graph::Dijkstra(const unsigned sta
         currentNode = Q.top();
         Q.pop();
         if (currentNode.first <= weights[(currentNode.second)->m_name]) {
-            for(const auto& v : (currentNode.second)->m_adj ){
+            for(const auto& v : (currentNode.second)->get_adjacent() ){
                 if (weights[(v.second)->m_name] > weights[(currentNode.second)->m_name] + v.first) {
                     parents[(v.second)->m_name] = (currentNode.second)->m_name;
                     weights[(v.second)->m_name] = weights[(currentNode.second)->m_name] + v.first;
