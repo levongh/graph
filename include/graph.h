@@ -131,6 +131,8 @@ public:
     Graph(const std::set<unsigned>& vertexes,
             const std::set<std::pair<std::pair<unsigned, unsigned>, unsigned> >& edges, bool dir = false);
 
+    ~Graph();
+
     void print() const;
 
     /// @brief returns the weight of specified edge
