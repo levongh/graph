@@ -55,6 +55,17 @@ Graph::Graph(const std::set<unsigned>& vertexes,
     }
 }
 
+Graph::~Graph()
+{
+    for (auto item : m_work) {
+        delete item.second;
+    }
+    for (auto item : m_edges) {
+        delete item;
+    }
+    std::cout << "destructor" << std::endl;
+}
+
 unsigned Graph::get_weight(Vertex* vert1, Vertex* vert2)
 {
     const auto& iter = std::find_if(m_edges.begin(), m_edges.end(), [vert1, vert2] (const Edge* e) -> bool
