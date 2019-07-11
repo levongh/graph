@@ -31,20 +31,20 @@ public:
     virtual void run_partition() override;
 
 private:
-    double calculate_move(unsigned int index);
+    double calculateMove(unsigned int index);
 
     void mutate();
 
-    void apply_move(Vertex* to_move);
+    void applyMove(Vertex* to_move);
 
     //! function to control temperature
-    void shedule_annealing();
+    void sheduleAnnealing();
 
 private:
     unsigned int m_temperature;
     unsigned int m_counter;
-    unsigned int m_vertex_count;
-    double m_cut_size;
+    unsigned int m_vertexCount;
+    double m_cutSize;
     annealing_type m_annealing_type;
     std::random_device m_device;
     std::mt19937 m_engine;
