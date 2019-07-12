@@ -45,9 +45,8 @@ private:
     unsigned int m_counter;
     unsigned int m_vertexCount;
     double m_cutSize;
-    annealing_type m_annealing_type;
+    annealing_type m_annealingType;
     std::random_device m_device;
     std::mt19937 m_engine;
     std::uniform_int_distribution<unsigned> m_distribution;
-    std::vector<std::vector<Vertex*> > m_subsets;
 };

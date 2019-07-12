@@ -14,11 +14,10 @@ simulated_annealing::simulated_annealing(Graph* G, partition_config config)
     , m_counter{0}
     , m_vertexCount{m_graph->get_vertex_count()}
     , m_cutSize{0}
-    , m_annealing_type{annealing_type::FAST_ANNEALING}
+    , m_annealingType{annealing_type::FAST_ANNEALING}
     , m_device{}
     , m_engine{m_device()}
     , m_distribution{1, m_vertexCount}
-    , m_subsets{config.get_partition_count()}
 {
 }
 
@@ -39,7 +38,7 @@ void simulated_annealing::applyMove(Vertex* to_move)
 
 void simulated_annealing::sheduleAnnealing()
 {
-    switch(m_annealing_type)
+    switch(m_annealingType)
     {
         case annealing_type::FAST_ANNEALING:
             m_temperature = m_temperature / 1.02;
@@ -70,8 +69,8 @@ void simulated_annealing::mutate()
 void simulated_annealing::run_partition()
 {
     std::cout << "SM algorithm starting ..." <<std::endl;
-    initial_partition(m_subsets[0], m_subsets[1]);
-    m_cutSize = calculate_cut(m_subsets[0]);
+    initial_partition(m_buckets[0], m_buckets[1]);
+    m_cutSize = calculate_cut(m_buckets[0]);
     std::cout << "Initial cut size is: " << m_cutSize;
     while (m_temperature > 0 && m_counter < ITERATION_NUMBER) {
         mutate();

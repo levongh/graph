@@ -25,28 +25,27 @@ void kernigan_lin::run_partition()
 {
     std::cout << "KL algorithm starting ..." <<std::endl;
     /// step 1
-    initial_partition(m_subsets[0], m_subsets[1]);
-    //print_subsets(m_subsets[0], m_subsets[1]);
+    initial_partition(m_buckets[0], m_buckets[1]);
     /// print initial cut size
     /// save initial cut size for algorithm report
-    const auto initial_cut_size = calculate_cut(m_subsets[0]);
-    std::cout << calculate_cut(m_subsets[0]) <<std::endl;;
+    const auto initial_cut_size = calculate_cut(m_buckets[0]);
+    std::cout << calculate_cut(m_buckets[0]) <<std::endl;;
 
     while (true) {
-        for (unsigned i = 0; i < m_subsets.size(); ++i) {
-            std::sort(m_subsets[i].begin(), m_subsets[i].end(),
+        for (unsigned i = 0; i < m_buckets.size(); ++i) {
+            std::sort(m_buckets[i].begin(), m_buckets[i].end(),
                     [this] (Vertex* vert1, Vertex* vert2) -> bool
                     {
                         return vert1->internal_cost() > vert2->internal_cost();
                     });
         }
 
-        auto iter1 = m_subsets[0].begin();
-        auto iter2 = m_subsets[1].begin();
+        auto iter1 = m_buckets[0].begin();
+        auto iter2 = m_buckets[1].begin();
         /// will use this container uring algorithm thase optimization
         std::vector<unsigned> gain_vector;//(m_subsets[0].size(), 0);
 
-        while (iter1 != m_subsets[0].end() && iter2 != m_subsets[1].end()) {
+        while (iter1 != m_buckets[0].end() && iter2 != m_buckets[1].end()) {
             gain_vector.push_back(reduction(*iter1, *iter2));
             ++iter1;
             ++iter2;
@@ -61,12 +60,11 @@ void kernigan_lin::run_partition()
             max_gain = max_gain + gain_vector[i];
         }
         if (max_gain_index == 0) {
-            report_algorithm_result(initial_cut_size, calculate_cut(m_subsets[0]), "KL");
+            report_algorithm_result(initial_cut_size, calculate_cut(m_buckets[0]), "KL");
             break;
         }
         accept_moves(max_gain_index);
-        //calculate_cut(m_subsets[0]);
-        std::cout << calculate_cut(m_subsets[0]) <<std::endl;;
+        std::cout << calculate_cut(m_buckets[0]) <<std::endl;;
     }
     write_graph();
 }
@@ -74,7 +72,7 @@ void kernigan_lin::run_partition()
 void kernigan_lin::accept_moves(int index)
 {
     for (int i = 0; i < index; ++i) {
-        swap_vertexes(m_subsets[0][i], m_subsets[1][i]);
+        swap_vertexes(m_buckets[0][i], m_buckets[1][i]);
     }
 }
 

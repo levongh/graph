@@ -27,22 +27,20 @@ class fiduccia_mattheyses : public graph_partition
 public:
     fiduccia_mattheyses(Graph* G, partition_config config = partition_config())
         : graph_partition{G, config}
-        , m_buckets{config.get_partition_count()}
    {
    }
 
    virtual void run_partition() override;
 
 private:
-    void init_gains();
-    Vertex* get_highest() const;
-    void move_vertex(Vertex* vert);
-    void fix_gain();
+    void initGains();
+    Vertex* getHighest() const;
+    void moveVertex(Vertex* vert);
+    void fixGain();
     void print() const;
 
 private:
    double m_ratio;
    int  m_pmax;
-   std::vector<std::vector<Vertex*> > m_buckets;
    std::list<Vertex*> m_free;
 };

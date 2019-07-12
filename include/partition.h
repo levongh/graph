@@ -1,6 +1,5 @@
 #pragma once
 
-#include <iostream>
 #include <cassert>
 #include <vector>
 #include <mutex>
@@ -24,7 +23,7 @@ class Vertex;
  *  @param m_type showing algorithm type this parameter should
  *         \use paritition_manager class object
  *  @param m_count showing partitions count
- *  @param m_allow_multithreading showing is it accepatable to use mutithread partition or not
+ *  @param m_allowMultithreading showing is it accepatable to use mutithread partition or not
  */
 struct partition_config
 {
@@ -32,30 +31,30 @@ public:
     partition_config(partition_type type = partition_type::KERNIGAN_LIN, unsigned short count = 2, bool allow = false)
         : m_type{type}
         , m_count{count}
-        , m_allow_multithreading{allow}
+        , m_allowMultithreading{allow}
     {
         assert(count >=2);
     }
 
-    partition_type get_partition_type() const
+    partition_type partitionType() const
     {
         return m_type;
     }
 
-    unsigned short get_partition_count() const
+    unsigned short getPartitionCount() const
     {
         return m_count;
     }
 
-    bool is_mutithreaded() const
+    bool isMutithreaded() const
     {
-        return m_allow_multithreading;
+        return m_allowMultithreading;
     }
 
 private:
     partition_type m_type;
     unsigned short m_count;
-    bool m_allow_multithreading;
+    bool m_allowMultithreading;
 };
 
 /**
@@ -73,6 +72,7 @@ public:
     graph_partition(Graph* G, partition_config config)
         : m_graph{G}
         , m_config{config}
+        , m_buckets{config.getPartitionCount()}
     {
     }
 
@@ -98,5 +98,7 @@ protected:
 protected:
     Graph* m_graph;
     partition_config m_config;
+    std::vector<std::vector<Vertex*> > m_buckets;
+
 };
 
