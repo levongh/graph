@@ -4,7 +4,7 @@
 #include "graph.h"
 #include "fiduccia_mattheyses.h"
 
-void fiduccia_mattheyses::init_gains()
+void fiduccia_mattheyses::initGains()
 {
     std::multimap<int, Vertex*, std::greater<int> > buckets;
     m_graph->initialize_buckets(buckets);
@@ -15,13 +15,13 @@ void fiduccia_mattheyses::init_gains()
         Vertex* highest = (*buckets.begin()).second;
         buckets.erase(buckets.begin());
         if (highest->move_cost() > 0) {
-            move_vertex(highest);
+            moveVertex(highest);
         }
     }
     std::cout << calculate_cut(m_buckets[0]) << std::endl;;
 }
 
-void fiduccia_mattheyses::move_vertex(Vertex* vert)
+void fiduccia_mattheyses::moveVertex(Vertex* vert)
 {
     const auto label = vert->get_label();
     if (label == 0) {
@@ -39,7 +39,7 @@ void fiduccia_mattheyses::run_partition()
 {
     std::cout << "FM algorithm starting ..." <<std::endl;
     initial_partition(m_buckets[0], m_buckets[1]);
-    init_gains();
+    initGains();
     write_graph();
 }
 

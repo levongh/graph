@@ -1,8 +1,6 @@
 #pragma once
 
-#include "kernigan_lin.h"
-#include "fiduccia_mattheyses.h"
-#include "simulated_annealing.h"
+#include "partition.h"
 
 /// @brief manager for partition alforithm creation
 /// @brief should work like builder pattern
@@ -14,7 +12,7 @@ public:
 
     /// @brief default constructor
     partition_manager()
-        : part_algorithms{}
+        : m_algorithms{}
     {}
 
     /// @brief destructor
@@ -50,5 +48,5 @@ private:
     /// @}
 
 private:
-    std::vector<graph_partition*> part_algorithms;
+    std::vector<graph_partition*> m_algorithms;
 };

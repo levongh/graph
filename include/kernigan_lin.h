@@ -15,7 +15,6 @@ class kernigan_lin : public graph_partition
 public:
     kernigan_lin(Graph* G, partition_config config = partition_config())
         : graph_partition{G, config}
-        , m_subsets{config.get_partition_count()}
     {
     }
 
@@ -27,6 +26,4 @@ private:
 
     void accept_moves(int index);
 
-private:
-    std::vector<std::vector<Vertex*> > m_subsets;
 };
