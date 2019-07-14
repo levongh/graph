@@ -39,15 +39,15 @@ public:
 
 protected:
     /// @bried function to create initial partition for given graph
-    void initial_partition(std::vector<Vertex*>& label_1, std::vector<Vertex*>& label_2);
+    void initialPartition(std::vector<Vertex*>& label_1, std::vector<Vertex*>& label_2);
 
     /// @brief returns the cutsize
-    int calculate_cut(const std::vector<Vertex*>& set) const;
+    int calculateCut(const std::vector<Vertex*>& set) const;
 
     /// @brief helper function to check subsets
-    void print_subsets(const std::vector<Vertex*>& first, const std::vector<Vertex*>& second) const;
+    void printSubsets(const std::vector<Vertex*>& first, const std::vector<Vertex*>& second) const;
 
-    void write_graph() const;
+    void writeGraph() const;
 
 protected:
     Graph* m_graph;
