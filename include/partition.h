@@ -5,57 +5,11 @@
 #include <mutex>
 #include <iostream>
 
-enum class partition_type
-{
-    KERNIGAN_LIN,
-    FETUCCIA_MATEISIS,
-    SIMULATED_ANNEALING,
-    K_WAY
-};
+#include "config.h"
 
 
 class Graph;
-class Edge;
 class Vertex;
-
-/**
- *  @brief class for algorithm configuration
- *  @param m_type showing algorithm type this parameter should
- *         \use paritition_manager class object
- *  @param m_count showing partitions count
- *  @param m_allowMultithreading showing is it accepatable to use mutithread partition or not
- */
-struct partition_config
-{
-public:
-    partition_config(partition_type type = partition_type::KERNIGAN_LIN, unsigned short count = 2, bool allow = false)
-        : m_type{type}
-        , m_count{count}
-        , m_allowMultithreading{allow}
-    {
-        assert(count >=2);
-    }
-
-    partition_type partitionType() const
-    {
-        return m_type;
-    }
-
-    unsigned short getPartitionCount() const
-    {
-        return m_count;
-    }
-
-    bool isMutithreaded() const
-    {
-        return m_allowMultithreading;
-    }
-
-private:
-    partition_type m_type;
-    unsigned short m_count;
-    bool m_allowMultithreading;
-};
 
 /**
  * @class GraphPartition
@@ -69,7 +23,7 @@ private:
 class GraphPartition
 {
 public:
-    GraphPartition(Graph* G, partition_config config)
+    GraphPartition(Graph* G, PartitionConfig config)
         : m_graph{G}
         , m_config{config}
         , m_buckets{config.getPartitionCount()}
@@ -97,7 +51,7 @@ protected:
 
 protected:
     Graph* m_graph;
-    partition_config m_config;
+    PartitionConfig m_config;
     std::vector<std::vector<Vertex*> > m_buckets;
 
 };

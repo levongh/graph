@@ -26,7 +26,7 @@ enum class annealing_type
 class simulated_annealing : public GraphPartition
 {
 public:
-    simulated_annealing(Graph* G, partition_config config = partition_config());
+    simulated_annealing(Graph* G, PartitionConfig config = PartitionConfig());
 
     virtual void run_partition() override;
 
