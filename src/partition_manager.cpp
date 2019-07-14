@@ -22,7 +22,7 @@ void partition_manager::remove_instance()
     s_instance = nullptr;
 }
 
-graph_partition* partition_manager::create_algorithm(partition_type pt, Graph* G)
+GraphPartition* partition_manager::create_algorithm(partition_type pt, Graph* G)
 {
     if (pt == partition_type::KERNIGAN_LIN) {
         m_algorithms.push_back(new kernigan_lin{G});

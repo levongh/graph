@@ -10,11 +10,11 @@
  * @author Levon Ghukasyan
  */
 
-class kernigan_lin : public graph_partition
+class kernigan_lin : public GraphPartition
 {
 public:
     kernigan_lin(Graph* G, partition_config config = partition_config())
-        : graph_partition{G, config}
+        : GraphPartition{G, config}
     {
     }
 

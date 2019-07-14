@@ -3,7 +3,7 @@
 #include "partition.h"
 #include "graph.h"
 
-int graph_partition::calculate_cut(const std::vector<Vertex*>& set) const
+int GraphPartition::calculate_cut(const std::vector<Vertex*>& set) const
 {
     unsigned result = 0;
     for (const auto& elem : set) {
@@ -12,12 +12,12 @@ int graph_partition::calculate_cut(const std::vector<Vertex*>& set) const
     return result;
 }
 
-void graph_partition::initial_partition(std::vector<Vertex*>& label_1, std::vector<Vertex*>& label_2)
+void GraphPartition::initial_partition(std::vector<Vertex*>& label_1, std::vector<Vertex*>& label_2)
 {
     m_graph->initial_partition(label_1, label_2);
 }
 
-void graph_partition::print_subsets(const std::vector<Vertex*>& first, const std::vector<Vertex*>& second) const
+void GraphPartition::print_subsets(const std::vector<Vertex*>& first, const std::vector<Vertex*>& second) const
 {
     for (const auto& it : first) {
         std::cout <<it->m_name << " l" << it->get_label() << ' ';
@@ -29,7 +29,7 @@ void graph_partition::print_subsets(const std::vector<Vertex*>& first, const std
     std::cout<<std::endl;
 }
 
-void graph_partition::write_graph() const
+void GraphPartition::write_graph() const
 {
     std::ofstream out_file("after_part.txt", std::ofstream::out);
     m_graph->print_partition(out_file);
