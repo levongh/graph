@@ -1,16 +1,16 @@
 #pragma once
 
-#include "partition.h"
-//! need to think is list acceptable for us
-#include <list>
-
-
 /**
  * @file fiduccia_mattheyses.h
  * @title declaration of fiduccia_mattheyses class
  * @description implements FM algorithm
  * @author Levon Ghukasyan
  */
+
+
+#include "partition.h"
+//! need to think is list acceptable for us
+#include <list>
 
 /**
  * @brief FM algorithm
@@ -25,7 +25,7 @@
 class fiduccia_mattheyses : public GraphPartition
 {
 public:
-    fiduccia_mattheyses(Graph* G, partition_config config = partition_config())
+    fiduccia_mattheyses(Graph* G, PartitionConfig config = PartitionConfig())
         : GraphPartition{G, config}
    {
    }
