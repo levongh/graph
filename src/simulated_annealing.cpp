@@ -69,13 +69,13 @@ void simulated_annealing::mutate()
 void simulated_annealing::run_partition()
 {
     std::cout << "SM algorithm starting ..." <<std::endl;
-    initial_partition(m_buckets[0], m_buckets[1]);
-    m_cutSize = calculate_cut(m_buckets[0]);
+    initialPartition(m_buckets[0], m_buckets[1]);
+    m_cutSize = calculateCut(m_buckets[0]);
     std::cout << "Initial cut size is: " << m_cutSize;
     while (m_temperature > 0 && m_counter < ITERATION_NUMBER) {
         mutate();
         ++m_counter;
     }
-    write_graph();
+    writeGraph();
     std::cout << " Optimized cut size is: " << m_cutSize << std::endl;
 }
