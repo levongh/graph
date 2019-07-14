@@ -32,7 +32,7 @@ public:
     partition_manager& operator=(partition_manager&& other) = delete;
 
     /// @brief create and return required algorithm
-    graph_partition* create_algorithm(partition_type pt, Graph* g);
+    GraphPartition* create_algorithm(partition_type pt, Graph* g);
     /// @}
 
     /// @brief static interfaces
@@ -48,5 +48,5 @@ private:
     /// @}
 
 private:
-    std::vector<graph_partition*> m_algorithms;
+    std::vector<GraphPartition*> m_algorithms;
 };

@@ -23,7 +23,7 @@ enum class annealing_type
     //! sould add another anneling types
 };
 
-class simulated_annealing : public graph_partition
+class simulated_annealing : public GraphPartition
 {
 public:
     simulated_annealing(Graph* G, partition_config config = partition_config());

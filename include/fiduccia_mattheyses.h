@@ -22,11 +22,11 @@
  * @param m_balance the balance of the partitions
  * @param m_passes the number of algorithm passes
  */
-class fiduccia_mattheyses : public graph_partition
+class fiduccia_mattheyses : public GraphPartition
 {
 public:
     fiduccia_mattheyses(Graph* G, partition_config config = partition_config())
-        : graph_partition{G, config}
+        : GraphPartition{G, config}
    {
    }
 

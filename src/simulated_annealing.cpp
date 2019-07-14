@@ -9,7 +9,7 @@ const unsigned int ITERATION_NUMBER = 100;
 } //! unnamed namespace
 
 simulated_annealing::simulated_annealing(Graph* G, partition_config config)
-    : graph_partition{G, config}
+    : GraphPartition{G, config}
     , m_temperature{std::numeric_limits<unsigned int>::max()}
     , m_counter{0}
     , m_vertexCount{m_graph->get_vertex_count()}

@@ -58,7 +58,7 @@ private:
 };
 
 /**
- * @class graph_partition
+ * @class GraphPartition
  * @brief this pure virtual class designed to get more generic 
  * @      \interface for graph partitioning all parition algorithms
  *        \should inherit from it
@@ -66,10 +66,10 @@ private:
  * @param m_config this is paritition gonfigurations which algorithm should get from input file
  */
 
-class graph_partition
+class GraphPartition
 {
 public:
-    graph_partition(Graph* G, partition_config config)
+    GraphPartition(Graph* G, partition_config config)
         : m_graph{G}
         , m_config{config}
         , m_buckets{config.getPartitionCount()}
@@ -79,7 +79,7 @@ public:
     /// @brief virtual interface to run partitioning algorithm
     virtual void run_partition() = 0;
 
-    virtual ~graph_partition()
+    virtual ~GraphPartition()
     {
     }
 
