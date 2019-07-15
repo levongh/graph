@@ -7,7 +7,7 @@
 void fiduccia_mattheyses::initGains()
 {
     std::multimap<int, Vertex*, std::greater<int> > buckets;
-    m_graph->initialize_buckets(buckets);
+    m_graph->initializeBuckets(buckets);
 
     std::cout << calculateCut(m_buckets[0]) << std::endl;;
 
