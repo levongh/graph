@@ -24,15 +24,15 @@ simulated_annealing::simulated_annealing(Graph* G, PartitionConfig config)
 double simulated_annealing::calculateMove(unsigned int index)
 {
     auto to_move = m_graph->get_vertex(index);
-    return to_move->move_cost();
+    return to_move->moveCost();
 }
 
 void simulated_annealing::applyMove(Vertex* to_move)
 {
-    if (to_move->get_label() == 0) {
-        to_move->set_label(1);
+    if (to_move->getLabel() == 0) {
+        to_move->setLabel(1);
     } else {
-        to_move->set_label(0);
+        to_move->setLabel(0);
     }
 }
 
@@ -51,7 +51,7 @@ void simulated_annealing::mutate()
 {
     int index = m_distribution(m_engine);
     auto to_move = m_graph->get_vertex(index);
-    auto cut_reduction = to_move->move_cost();
+    auto cut_reduction = to_move->moveCost();
     if (cut_reduction > 0) {
         applyMove(to_move);
         m_cutSize = m_cutSize - cut_reduction;

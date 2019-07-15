@@ -14,7 +14,7 @@ void fiduccia_mattheyses::initGains()
     while (!buckets.empty()) {
         Vertex* highest = (*buckets.begin()).second;
         buckets.erase(buckets.begin());
-        if (highest->move_cost() > 0) {
+        if (highest->moveCost() > 0) {
             moveVertex(highest);
         }
     }
@@ -23,7 +23,7 @@ void fiduccia_mattheyses::initGains()
 
 void fiduccia_mattheyses::moveVertex(Vertex* vert)
 {
-    const auto label = vert->get_label();
+    const auto label = vert->getLabel();
     if (label == 0) {
         m_buckets[0].erase(std::remove(m_buckets[0].begin(), m_buckets[0].end(), vert));
         m_buckets[1].push_back(vert);

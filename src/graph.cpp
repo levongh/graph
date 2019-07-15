@@ -6,43 +6,22 @@
 #include <fstream>
 
 #include "graph.h"
+#include "vertex.h"
 
+namespace {
 
-int Vertex::internal_cost() const
+class CompareGreater
 {
-    unsigned result = 0;
-    for (const auto& elem : m_adj) {
-        if (elem.second->get_label() == get_label()) {
-            result += elem.first;
-        }
+public:
+    bool operator()(const std::pair<int, Vertex*> lhs,
+                    const std::pair<int, Vertex*> rhs)
+    {
+        return (lhs.first > rhs.first);
     }
-    return result;
-}
+};
 
-int Vertex::external_cost() const
-{
-    unsigned result = 0;
-    for (const auto& elem : m_adj) {
-        if (elem.second->get_label() != get_label()) {
-            result += elem.first;
-        }
-    }
-    return result;
-}
 
-int Vertex::move_cost() const
-{
-    return external_cost() - internal_cost();
-}
-
-void Vertex::print() const
-{
-    std::cout <<  m_name <<' ';
-    for (const auto& iter : m_adj) {
-        std::cout << iter.first << " " << iter.second->m_name << "   ";
-    }
-    std::cout << std::endl;
-}
+} // unnamed namespace
 
 Graph::Graph(const std::set<unsigned>& vertexes,
         const std::set<std::pair<std::pair<unsigned, unsigned>, unsigned> >& edges, bool dir)
@@ -85,12 +64,12 @@ void Graph::initial_partition(std::vector<Vertex*>& label_1, std::vector<Vertex*
     const auto pivot = m_numvertexes/2;
     auto vert_iter = m_work.begin();
     for (unsigned  i = 0; i < pivot; ++i) {
-        vert_iter->second->set_label(0);
+        vert_iter->second->setLabel(0);
         label_1.push_back(vert_iter->second);
         ++vert_iter;
     }
     for (unsigned i = pivot; i < m_numvertexes; ++i) {
-        vert_iter->second->set_label(1);
+        vert_iter->second->setLabel(1);
         label_2.push_back(vert_iter->second);
         ++vert_iter;
     }
@@ -99,7 +78,7 @@ void Graph::initial_partition(std::vector<Vertex*>& label_1, std::vector<Vertex*
 void Graph::initialize_buckets(std::multimap<int, Vertex*, std::greater<int> >& buckets)
 {
     for (const auto& iter : m_work) {
-        buckets.insert(std::make_pair(iter.second->internal_cost(), iter.second));
+        buckets.insert(std::make_pair(iter.second->internalCost(), iter.second));
     }
 }
 
@@ -140,7 +119,7 @@ void Graph::add_edge(const unsigned from, const unsigned to, double cost)
     }
     Vertex* to_v = iter->second;
     m_edges.insert(new Edge(from_v, to_v, cost));
-    from_v->add_adjecent(std::move(std::make_pair(cost, to_v)));
+    from_v->addAdjecent(std::move(std::make_pair(cost, to_v)));
 }
 
 void Graph::BFS(const unsigned source)
@@ -154,7 +133,7 @@ void Graph::BFS(const unsigned source)
         std::cout << str << "->";
         q.pop();
 
-        for(const auto& iter : m_work[str]->get_adjacent()) {
+        for(const auto& iter : m_work[str]->getAdjacent()) {
             if(!visited[get_index(iter.second->m_name)]){
                 visited[get_index(iter.second->m_name)] = true;
                 q.push(iter.second->m_name);
@@ -176,7 +155,7 @@ void Graph::DFS(const unsigned source)
         std::cout << str << "->";
         q.pop();
 
-        for(const auto& iter : m_work[str]->get_adjacent()) {
+        for(const auto& iter : m_work[str]->getAdjacent()) {
             if(!visited[get_index(iter.second->m_name)]){
                 visited[get_index(iter.second->m_name)] = true;
                 q.push(iter.second->m_name);
@@ -268,7 +247,7 @@ void Graph::mst_prim(const unsigned root)
             res[u] = PARENT[u];
         }
 
-        for(const auto& v : u->get_adjacent()){
+        for(const auto& v : u->getAdjacent()){
             if (std::find(Q.begin(), Q.end(), (v.second)->m_name)!= Q.end()){
                 if(v.first < KEY[v.second]){
                     PARENT[v.second] = u;
@@ -301,7 +280,7 @@ std::map<unsigned, std::pair<int, unsigned> > Graph::Dijkstra(const unsigned sta
         currentNode = Q.top();
         Q.pop();
         if (currentNode.first <= weights[(currentNode.second)->m_name]) {
-            for(const auto& v : (currentNode.second)->get_adjacent() ){
+            for(const auto& v : (currentNode.second)->getAdjacent() ){
                 if (weights[(v.second)->m_name] > weights[(currentNode.second)->m_name] + v.first) {
                     parents[(v.second)->m_name] = (currentNode.second)->m_name;
                     weights[(v.second)->m_name] = weights[(currentNode.second)->m_name] + v.first;
@@ -327,6 +306,6 @@ void Graph::print() const
 void Graph::print_partition(std::ofstream& output_file) const
 {
      for (const auto& iter : m_work) {
-         output_file << iter.second->get_label() << '\n';
+         output_file << iter.second->getLabel() << '\n';
      }
 }

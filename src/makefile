@@ -1,4 +1,5 @@
 SOURCS = graph.cpp \
+		 vertex.cpp \
 		 graph_input.cpp \
 		 partition_manager.cpp \
 		 partition.cpp \
