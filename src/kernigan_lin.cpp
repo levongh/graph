@@ -8,9 +8,9 @@ namespace {
 
 void swap_vertexes(Vertex*& vert1, Vertex*& vert2)
 {
-    const auto lbl = vert1->get_label();
-    vert1->set_label(vert2->get_label());
-    vert2->set_label(lbl);
+    const auto lbl = vert1->getLabel();
+    vert1->setLabel(vert2->getLabel());
+    vert2->setLabel(lbl);
     std::swap(vert1, vert2);
 }
 
@@ -29,14 +29,14 @@ void kernigan_lin::run_partition()
     /// print initial cut size
     /// save initial cut size for algorithm report
     const auto initialCutSize = calculateCut(m_buckets[0]);
-    std::cout << calculateCut(m_buckets[0]) <<std::endl;;
+    std::cout << calculateCut(m_buckets[0]) << std::endl;;
 
     while (true) {
         for (unsigned i = 0; i < m_buckets.size(); ++i) {
             std::sort(m_buckets[i].begin(), m_buckets[i].end(),
                     [this] (Vertex* vert1, Vertex* vert2) -> bool
                     {
-                        return vert1->internal_cost() > vert2->internal_cost();
+                        return vert1->internalCost() > vert2->internalCost();
                     });
         }
 
@@ -78,5 +78,5 @@ void kernigan_lin::accept_moves(int index)
 
 int kernigan_lin::reduction(Vertex* vert1, Vertex* vert2) const
 {
-    return vert1->move_cost() + vert2->move_cost() - 2 * m_graph->get_weight(vert1, vert2);
+    return vert1->moveCost() + vert2->moveCost() - 2 * m_graph->get_weight(vert1, vert2);
 }

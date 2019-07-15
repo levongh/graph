@@ -5,75 +5,8 @@
 #include <set>
 #include <string>
 
-/**
- * @brief class Vertex
- * @param m_adj cost of edge and destination vertex
- * @param m_name the name of vcertex
- */
+#include "vertex.h"
 
-class Vertex
-{
-public:
-    /// @brief constructor
-    Vertex(const unsigned name, unsigned short label = 0)
-        : m_name{name}
-        , m_label{label}
-    {
-    }
-
-    unsigned short get_label()const
-    {
-        return m_label;
-    }
-
-    void set_label(unsigned short label)
-    {
-        m_label = label;
-    }
-
-    /// @brief function to sum up vertex internal cost
-    int internal_cost() const;
-
-    /// @brief function to sum up vertex external cost
-    int external_cost() const;
-
-    /// @brief function to sum up move cost
-    int move_cost() const;
-
-    void print() const;
-
-    const std::vector<std::pair<int, Vertex*>>& get_adjacent() const
-    {
-        return m_adj;
-    }
-
-    void add_adjecent(std::pair<int, Vertex*>&& adj)
-    {
-        m_adj.push_back(adj);
-    }
-
-    unsigned m_name;
-
-private:
-    std::vector<std::pair<int, Vertex*> > m_adj;
-
-private:
-    unsigned short m_label;
-};
-
-
-/**
- * @brief class CompareGreater
- * @brief class to compare two vertexes in priority queues
- */
-class CompareGreater
-{
-public:
-    bool operator()(const std::pair<int, Vertex *> lhs, const std::pair<int, Vertex *> rhs)
-    {
-        return (lhs.first > rhs.first);
-    }
-};
 
 /* struct to store edges in the graph. */
 /**
@@ -100,16 +33,16 @@ public:
 };
 
 /**
- * @brief class edge_compare
+ * @brief class EdgeComparator
  * @brief designed to sort eges with there weights
  */
-class edge_compare
+class EdgeComparator
 {
 public:
     bool operator()(const Edge* lhs, const Edge* rhs)
     {
-        return (lhs->m_vertex1->m_name < rhs->m_vertex1->m_name)
-                    && (lhs->m_vertex2->m_name <= rhs->m_vertex2->m_name);
+        return (lhs->m_vertex1->m_name < rhs->m_vertex1->m_name) &&
+               (lhs->m_vertex2->m_name <= rhs->m_vertex2->m_name);
     }
 };
 
@@ -183,5 +116,5 @@ private:
     std::map<unsigned, Vertex*> m_work;
     unsigned int m_numvertexes;
     std::vector<unsigned> m_vertexes;
-    std::set<Edge*, edge_compare> m_edges;
+    std::set<Edge*, EdgeComparator> m_edges;
 };
