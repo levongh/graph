@@ -35,7 +35,7 @@ void fiduccia_mattheyses::moveVertex(Vertex* vert)
     }
 }
 
-void fiduccia_mattheyses::run_partition()
+void fiduccia_mattheyses::runPartition()
 {
     std::cout << "FM algorithm starting ..." <<std::endl;
     initialPartition(m_buckets[0], m_buckets[1]);

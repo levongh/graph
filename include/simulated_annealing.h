@@ -28,7 +28,7 @@ class simulated_annealing : public GraphPartition
 public:
     simulated_annealing(Graph* G, PartitionConfig config = PartitionConfig());
 
-    virtual void run_partition() override;
+    virtual void runPartition() override;
 
 private:
     double calculateMove(unsigned int index);

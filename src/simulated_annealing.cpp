@@ -66,7 +66,7 @@ void simulated_annealing::mutate()
     sheduleAnnealing();
 }
 
-void simulated_annealing::run_partition()
+void simulated_annealing::runPartition()
 {
     std::cout << "SM algorithm starting ..." << std::endl;
     initialPartition(m_buckets[0], m_buckets[1]);
