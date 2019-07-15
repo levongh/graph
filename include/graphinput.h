@@ -2,7 +2,7 @@
 
 
 /**
- * @file graph_input.h
+ * @file graphinput.h
  * @title declaration of graph_input
  * @description grap_reader is the cladd that pases input file parsing to graph
  * @author Levon Ghukasyan
@@ -29,21 +29,21 @@ namespace reader {
         EDGE_NODE
     };
 
-    class read_graph
+    class GraphReader
     {
     public:
-        explicit read_graph(const std::string& file_name)
+        explicit GraphReader(const std::string& file_name)
             : m_file_name{file_name}
             , m_mode{mode::SIMPLE}
         {
         }
 
     public:
-        read_graph(const read_graph& other) = delete;
-        read_graph& operator=(const read_graph& other) = delete;
+        GraphReader(const GraphReader& other) = delete;
+        GraphReader& operator=(const GraphReader& other) = delete;
 
-        read_graph(read_graph&& other) = delete;
-        read_graph& operator=(read_graph&& other) = delete;
+        GraphReader(GraphReader&& other) = delete;
+        GraphReader& operator=(GraphReader&& other) = delete;
 
     public:
         Graph* parse();

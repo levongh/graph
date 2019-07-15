@@ -2,9 +2,9 @@
 #include <functional>
 
 #include "graph.h"
-#include "fiduccia_mattheyses.h"
+#include "fiducciamattheyses.h"
 
-void fiduccia_mattheyses::initGains()
+void FiducciaMattheyses::initGains()
 {
     std::multimap<int, Vertex*, std::greater<int> > buckets;
     m_graph->initializeBuckets(buckets);
@@ -21,7 +21,7 @@ void fiduccia_mattheyses::initGains()
     std::cout << calculateCut(m_buckets[0]) << std::endl;;
 }
 
-void fiduccia_mattheyses::moveVertex(Vertex* vert)
+void FiducciaMattheyses::moveVertex(Vertex* vert)
 {
     const auto label = vert->getLabel();
     if (label == 0) {
@@ -35,7 +35,7 @@ void fiduccia_mattheyses::moveVertex(Vertex* vert)
     }
 }
 
-void fiduccia_mattheyses::runPartition()
+void FiducciaMattheyses::runPartition()
 {
     std::cout << "FM algorithm starting ..." <<std::endl;
     initialPartition(m_buckets[0], m_buckets[1]);

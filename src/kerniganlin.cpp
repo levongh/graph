@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <chrono>
 
-#include "kernigan_lin.h"
+#include "kerniganlin.h"
 #include "graph.h"
 
 namespace {
@@ -21,7 +21,7 @@ void report_algorithm_result(const unsigned initial, const unsigned current, con
 
 }
 
-void kernigan_lin::run_partition()
+void KerniganLin::runPartition()
 {
     std::cout << "KL algorithm starting ..." <<std::endl;
     /// step 1
@@ -63,20 +63,20 @@ void kernigan_lin::run_partition()
             report_algorithm_result(initialCutSize, calculateCut(m_buckets[0]), "KL");
             break;
         }
-        accept_moves(max_gain_index);
+        acceptMoves(max_gain_index);
         std::cout << calculateCut(m_buckets[0]) <<std::endl;;
     }
     writeGraph();
 }
 
-void kernigan_lin::accept_moves(int index)
+void KerniganLin::acceptMoves(int index)
 {
     for (int i = 0; i < index; ++i) {
         swap_vertexes(m_buckets[0][i], m_buckets[1][i]);
     }
 }
 
-int kernigan_lin::reduction(Vertex* vert1, Vertex* vert2) const
+int KerniganLin::reduction(Vertex* vert1, Vertex* vert2) const
 {
     return vert1->moveCost() + vert2->moveCost() - 2 * m_graph->getWeight(vert1, vert2);
 }

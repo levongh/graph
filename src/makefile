@@ -1,11 +1,11 @@
 SOURCS = graph.cpp \
 		 vertex.cpp \
-		 graph_input.cpp \
-		 partition_manager.cpp \
+		 graphinput.cpp \
+		 partitionmanager.cpp \
 		 partition.cpp \
-		 simulated_annealing.cpp \
-		 fiduccia_mattheyses.cpp \
-		 kernigan_lin.cpp \
+		 simulatedannealing.cpp \
+		 fiducciamattheyses.cpp \
+		 kerniganlin.cpp \
 		 main.cpp
 
 OBJDIR        = ../obj
