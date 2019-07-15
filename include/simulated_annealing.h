@@ -35,7 +35,7 @@ private:
 
     void mutate();
 
-    void applyMove(Vertex* to_move);
+    void applyMove(Vertex* toMove);
 
     //! function to control temperature
     void sheduleAnnealing();

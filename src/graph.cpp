@@ -27,10 +27,10 @@ Graph::Graph(const std::set<unsigned>& vertexes,
         const std::set<std::pair<std::pair<unsigned, unsigned>, unsigned> >& edges, bool dir)
 {
     for (const auto& iter : vertexes) {
-        add_vertex(iter);
+        addVertex(iter);
     }
     for (const auto& iter : edges) {
-       add_edge(iter.first.first, iter.first.second, iter.second);
+       addEdge(iter.first.first, iter.first.second, iter.second);
     }
 }
 
@@ -45,7 +45,7 @@ Graph::~Graph()
     std::cout << "destructor" << std::endl;
 }
 
-unsigned Graph::get_weight(Vertex* vert1, Vertex* vert2)
+unsigned Graph::getWeight(Vertex* vert1, Vertex* vert2)
 {
     const auto& iter = std::find_if(m_edges.begin(), m_edges.end(), [vert1, vert2] (const Edge* e) -> bool
             {
@@ -59,7 +59,7 @@ unsigned Graph::get_weight(Vertex* vert1, Vertex* vert2)
     }
 }
 
-void Graph::initial_partition(std::vector<Vertex*>& label_1, std::vector<Vertex*>& label_2)
+void Graph::initialPartition(std::vector<Vertex*>& label_1, std::vector<Vertex*>& label_2)
 {
     const auto pivot = m_numvertexes/2;
     auto vert_iter = m_work.begin();
@@ -75,7 +75,7 @@ void Graph::initial_partition(std::vector<Vertex*>& label_1, std::vector<Vertex*
     }
 }
 
-void Graph::initialize_buckets(std::multimap<int, Vertex*, std::greater<int> >& buckets)
+void Graph::initializeBuckets(std::multimap<int, Vertex*, std::greater<int> >& buckets)
 {
     for (const auto& iter : m_work) {
         buckets.insert(std::make_pair(iter.second->internalCost(), iter.second));
@@ -83,17 +83,17 @@ void Graph::initialize_buckets(std::multimap<int, Vertex*, std::greater<int> >& 
 }
 
 
-unsigned int Graph::get_index(const unsigned temp) const
+unsigned int Graph::getIndex(unsigned name) const
 {
     for (unsigned int i = 0; i < m_vertexes.size(); ++i) {
-        if (m_vertexes[i] == temp) {
+        if (m_vertexes[i] == name) {
             return i;
         }
     }
     return m_numvertexes;
 }
 
-void Graph::add_vertex(const unsigned name)
+void Graph::addVertex(unsigned name)
 {
     if (m_work.find(name) == m_work.end()) {
         m_work[name] = new Vertex(name);
@@ -104,7 +104,7 @@ void Graph::add_vertex(const unsigned name)
     std::cout << "\nVertex already exists!";
 }
 
-void Graph::add_edge(const unsigned from, const unsigned to, double cost)
+void Graph::addEdge(const unsigned from, const unsigned to, double cost)
 {
     auto iter = m_work.find(from);
     if (iter == m_work.end()) {
@@ -126,7 +126,7 @@ void Graph::BFS(const unsigned source)
 {
     std::queue<unsigned> q;
     std::vector<bool> visited(m_numvertexes, false);
-    visited[get_index(source)] = true;
+    visited[getIndex(source)] = true;
     q.push(source);
     while(!q.empty()){
         unsigned str = q.front();
@@ -134,8 +134,8 @@ void Graph::BFS(const unsigned source)
         q.pop();
 
         for(const auto& iter : m_work[str]->getAdjacent()) {
-            if(!visited[get_index(iter.second->m_name)]){
-                visited[get_index(iter.second->m_name)] = true;
+            if(!visited[getIndex(iter.second->m_name)]){
+                visited[getIndex(iter.second->m_name)] = true;
                 q.push(iter.second->m_name);
             }
         }
@@ -147,7 +147,7 @@ void Graph::DFS(const unsigned source)
 {
     std::stack<unsigned> q;
     std::vector<bool> visited(m_numvertexes, false);
-    visited[get_index(source)] = true;
+    visited[getIndex(source)] = true;
     q.push(source);
     std::vector<std::pair<int, Vertex*> >::iterator iter;
     while(!q.empty()){
@@ -156,8 +156,8 @@ void Graph::DFS(const unsigned source)
         q.pop();
 
         for(const auto& iter : m_work[str]->getAdjacent()) {
-            if(!visited[get_index(iter.second->m_name)]){
-                visited[get_index(iter.second->m_name)] = true;
+            if(!visited[getIndex(iter.second->m_name)]){
+                visited[getIndex(iter.second->m_name)] = true;
                 q.push(iter.second->m_name);
             }
         }
@@ -184,7 +184,7 @@ Vertex* find(Vertex* vertex)
 
 } //unnamed namespace
 
-void Graph::mst_kruskal()
+void Graph::mstKruskal()
 {
     std::vector<Edge*> res;
 
@@ -215,17 +215,17 @@ void Graph::mst_kruskal()
     }
 }
 
-unsigned Graph::get_vertex_count() const
+unsigned Graph::getVertexCount() const
 {
     return m_numvertexes;
 }
 
-Vertex* Graph::get_vertex(unsigned index) const
+Vertex* Graph::getVertex(unsigned index) const
 {
     return (*m_work.find(index)).second;
 }
 
-void Graph::mst_prim(const unsigned root)
+void Graph::mstPrim(const unsigned root)
 {
     std::map<Vertex*, Vertex*> res;
     std::map<Vertex*, Vertex*> PARENT;
@@ -303,7 +303,7 @@ void Graph::print() const
     }
 }
 
-void Graph::print_partition(std::ofstream& output_file) const
+void Graph::printPartition(std::ofstream& output_file) const
 {
      for (const auto& iter : m_work) {
          output_file << iter.second->getLabel() << '\n';

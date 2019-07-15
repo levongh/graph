@@ -14,7 +14,7 @@ int GraphPartition::calculateCut(const std::vector<Vertex*>& set) const
 
 void GraphPartition::initialPartition(std::vector<Vertex*>& label_1, std::vector<Vertex*>& label_2)
 {
-    m_graph->initial_partition(label_1, label_2);
+    m_graph->initialPartition(label_1, label_2);
 }
 
 void GraphPartition::printSubsets(const std::vector<Vertex*>& first, const std::vector<Vertex*>& second) const
@@ -32,5 +32,5 @@ void GraphPartition::printSubsets(const std::vector<Vertex*>& first, const std::
 void GraphPartition::writeGraph() const
 {
     std::ofstream out_file("after_part.txt", std::ofstream::out);
-    m_graph->print_partition(out_file);
+    m_graph->printPartition(out_file);
 }

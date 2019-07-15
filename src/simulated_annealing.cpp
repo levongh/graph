@@ -12,7 +12,7 @@ simulated_annealing::simulated_annealing(Graph* G, PartitionConfig config)
     : GraphPartition{G, config}
     , m_temperature{std::numeric_limits<unsigned int>::max()}
     , m_counter{0}
-    , m_vertexCount{m_graph->get_vertex_count()}
+    , m_vertexCount{m_graph->getVertexCount()}
     , m_cutSize{0}
     , m_annealingType{annealing_type::FAST_ANNEALING}
     , m_device{}
@@ -23,16 +23,16 @@ simulated_annealing::simulated_annealing(Graph* G, PartitionConfig config)
 
 double simulated_annealing::calculateMove(unsigned int index)
 {
-    auto to_move = m_graph->get_vertex(index);
-    return to_move->moveCost();
+    auto toMove = m_graph->getVertex(index);
+    return toMove->moveCost();
 }
 
-void simulated_annealing::applyMove(Vertex* to_move)
+void simulated_annealing::applyMove(Vertex* toMove)
 {
-    if (to_move->getLabel() == 0) {
-        to_move->setLabel(1);
+    if (toMove->getLabel() == 0) {
+        toMove->setLabel(1);
     } else {
-        to_move->setLabel(0);
+        toMove->setLabel(0);
     }
 }
 
@@ -50,17 +50,17 @@ void simulated_annealing::sheduleAnnealing()
 void simulated_annealing::mutate()
 {
     int index = m_distribution(m_engine);
-    auto to_move = m_graph->get_vertex(index);
-    auto cut_reduction = to_move->moveCost();
-    if (cut_reduction > 0) {
-        applyMove(to_move);
-        m_cutSize = m_cutSize - cut_reduction;
+    auto toMove = m_graph->getVertex(index);
+    auto cutReduction = toMove->moveCost();
+    if (cutReduction > 0) {
+        applyMove(toMove);
+        m_cutSize = m_cutSize - cutReduction;
     } else {
-        double p = std::exp((m_cutSize - cut_reduction) / m_temperature);
+        double p = std::exp((m_cutSize - cutReduction) / m_temperature);
         std::uniform_int_distribution<unsigned> dist{0, 100};
         if (dist(m_engine) < p) {
-            applyMove(to_move);
-            m_cutSize = m_cutSize - cut_reduction;
+            applyMove(toMove);
+            m_cutSize = m_cutSize - cutReduction;
         }
     }
     sheduleAnnealing();
@@ -68,7 +68,7 @@ void simulated_annealing::mutate()
 
 void simulated_annealing::run_partition()
 {
-    std::cout << "SM algorithm starting ..." <<std::endl;
+    std::cout << "SM algorithm starting ..." << std::endl;
     initialPartition(m_buckets[0], m_buckets[1]);
     m_cutSize = calculateCut(m_buckets[0]);
     std::cout << "Initial cut size is: " << m_cutSize;

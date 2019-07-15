@@ -66,25 +66,44 @@ public:
 
     ~Graph();
 
+public:
     void print() const;
 
     /// @brief returns the weight of specified edge
-    unsigned get_weight(Vertex* vert1, Vertex* vert2);
+    unsigned getWeight(Vertex* vert1, Vertex* vert2);
 
     /// @brief returns the index from name of vetex
     /// @brief index refers to vertex number in the graph
-    unsigned int get_index(const unsigned name) const;
+    unsigned int getIndex(unsigned name) const;
 
     /// @brief make initial partition
-    void initial_partition(std::vector<Vertex*>& label_1, std::vector<Vertex*>& label_2);
+    void initialPartition(std::vector<Vertex*>& label_1, std::vector<Vertex*>& label_2);
 
+    /// @brief add new vertex to graph
+    void addVertex(unsigned name);
+
+    /// @brief add new edge to graph
+    void addEdge(const unsigned from, const unsigned to, double cost = 1);
+
+    /// @brief
+    void initializeBuckets(std::multimap<int, Vertex*, std::greater<int> >& buckets);
+
+    /// @brief
+    void printPartition(std::ofstream& output_file) const;
+
+    unsigned getVertexCount() const;
+
+    Vertex* getVertex(unsigned index) const;
+
+    ///{
+public:
     /// @brief implements MST prim algorihm
     /// @brief prints out all the edges in the MST
-    void mst_prim(const unsigned from);
+    void mstPrim(const unsigned from);
 
     /// @brief implements MST Kruskal's algorithm
     /// @brief prints out all the edges in the MST
-    void mst_kruskal();
+    void mstKruskal();
 
     /// @brief implements BFS algorithm
     void BFS(const unsigned source);
@@ -92,24 +111,9 @@ public:
     /// @brief implements DFS algorithm
     void DFS(const unsigned source);
 
-    /// @brief add new vertex to graph
-    void add_vertex(const unsigned name);
-
-    /// @brief add new edge to graph
-    void add_edge(const unsigned from, const unsigned to, double cost = 1);
-
     /// @brief implemaentaion of Dijkstra's algorithm
     std::map<unsigned, std::pair<int, unsigned> > Dijkstra(const unsigned start);
-
-    /// @brief
-    void initialize_buckets(std::multimap<int, Vertex*, std::greater<int> >& buckets);
-
-    /// @brief
-    void print_partition(std::ofstream& output_file) const;
-
-    unsigned get_vertex_count() const;
-
-    Vertex* get_vertex(unsigned index) const;
+    ///}
 
 private:
     /// @brief stores the map from name of vertex to Vertex class

@@ -78,5 +78,5 @@ void kernigan_lin::accept_moves(int index)
 
 int kernigan_lin::reduction(Vertex* vert1, Vertex* vert2) const
 {
-    return vert1->moveCost() + vert2->moveCost() - 2 * m_graph->get_weight(vert1, vert2);
+    return vert1->moveCost() + vert2->moveCost() - 2 * m_graph->getWeight(vert1, vert2);
 }
