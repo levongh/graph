@@ -31,7 +31,7 @@ public:
     }
 
     /// @brief virtual interface to run partitioning algorithm
-    virtual void run_partition() = 0;
+    virtual void runPartition() = 0;
 
     virtual ~GraphPartition()
     {

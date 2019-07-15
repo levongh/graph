@@ -30,7 +30,7 @@ public:
    {
    }
 
-   virtual void run_partition() override;
+   virtual void runPartition() override;
 
 private:
     void initGains();
