@@ -4,7 +4,7 @@
 
 #include "graph.h"
 #include "timer.h"
-#include "graph_input.h"
+#include "graphinput.h"
 #include "partition_manager.h"
 
 int main(int argc, char** argv)
@@ -18,10 +18,10 @@ int main(int argc, char** argv)
                   << std::setfill('_') << std::setw(59) << "\n\n\n";
         return 1;
     } else if (argc == 2) {
-        reader::read_graph input_parser(argv[1]);
+        reader::GraphReader input_parser(argv[1]);
         tmp.reset(input_parser.parse());
     } else if (argc == 3) {
-        reader::read_graph input_parser(argv[1]);
+        reader::GraphReader input_parser(argv[1]);
         input_parser.parse();
         //reader::read_config input_config(argc[2]);
         //input_config.parse();

@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "graph.h"
-#include "graph_input.h"
+#include "graphinput.h"
 
 
 namespace {
@@ -48,7 +48,7 @@ Graph* create_graph(const reader::graph_data& data)
 
 namespace reader {
 
-bool read_graph::read_first_line(const std::string& str, unsigned& vert, unsigned& edge, size_t pos)
+bool GraphReader::read_first_line(const std::string& str, unsigned& vert, unsigned& edge, size_t pos)
 {
     try {
         size_t next_pos = str.find_first_of(whitespace, pos);
@@ -90,7 +90,7 @@ bool read_graph::read_first_line(const std::string& str, unsigned& vert, unsigne
     return true;
 }
 
-void read_graph::parse_line(const std::string& str, size_t pos, unsigned line_number, graph_data& data)
+void GraphReader::parse_line(const std::string& str, size_t pos, unsigned line_number, graph_data& data)
 {
     size_t initial_pos = str.find_first_not_of(whitespace, pos);
     if (initial_pos == std::string::npos) {
@@ -113,7 +113,7 @@ void read_graph::parse_line(const std::string& str, size_t pos, unsigned line_nu
     }
 }
 
-Graph* read_graph::parse()
+Graph* GraphReader::parse()
 {
     std::ifstream infile(m_file_name, std::ios_base::in);
     if (!infile.good()) {

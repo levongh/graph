@@ -1,8 +1,8 @@
 #pragma once
 
 /**
- * @file simulated_annealing.h
- * @class simulated_annealing
+ * @file simulatedannealing.h
+ * @class SimulatedAnnealing
  * @description basic implementation of simulated anneling algorithm 
  *              \to solve graph partition problem
  * @data http://mathworld.wolfram.com/SimulatedAnnealing.html
@@ -23,10 +23,10 @@ enum class annealing_type
     //! sould add another anneling types
 };
 
-class simulated_annealing : public GraphPartition
+class SimulatedAnnealing : public GraphPartition
 {
 public:
-    simulated_annealing(Graph* G, PartitionConfig config = PartitionConfig());
+    SimulatedAnnealing(Graph* G, PartitionConfig config = PartitionConfig());
 
     virtual void runPartition() override;
 

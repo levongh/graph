@@ -1,5 +1,5 @@
 
-#include "simulated_annealing.h"
+#include "simulatedannealing.h"
 #include "graph.h"
 
 namespace {
@@ -8,7 +8,7 @@ const unsigned int ITERATION_NUMBER = 100;
 
 } //! unnamed namespace
 
-simulated_annealing::simulated_annealing(Graph* G, PartitionConfig config)
+SimulatedAnnealing::SimulatedAnnealing(Graph* G, PartitionConfig config)
     : GraphPartition{G, config}
     , m_temperature{std::numeric_limits<unsigned int>::max()}
     , m_counter{0}
@@ -21,13 +21,13 @@ simulated_annealing::simulated_annealing(Graph* G, PartitionConfig config)
 {
 }
 
-double simulated_annealing::calculateMove(unsigned int index)
+double SimulatedAnnealing::calculateMove(unsigned int index)
 {
     auto toMove = m_graph->getVertex(index);
     return toMove->moveCost();
 }
 
-void simulated_annealing::applyMove(Vertex* toMove)
+void SimulatedAnnealing::applyMove(Vertex* toMove)
 {
     if (toMove->getLabel() == 0) {
         toMove->setLabel(1);
@@ -36,7 +36,7 @@ void simulated_annealing::applyMove(Vertex* toMove)
     }
 }
 
-void simulated_annealing::sheduleAnnealing()
+void SimulatedAnnealing::sheduleAnnealing()
 {
     switch(m_annealingType)
     {
@@ -47,7 +47,7 @@ void simulated_annealing::sheduleAnnealing()
     }
 }
 
-void simulated_annealing::mutate()
+void SimulatedAnnealing::mutate()
 {
     int index = m_distribution(m_engine);
     auto toMove = m_graph->getVertex(index);
@@ -66,7 +66,7 @@ void simulated_annealing::mutate()
     sheduleAnnealing();
 }
 
-void simulated_annealing::runPartition()
+void SimulatedAnnealing::runPartition()
 {
     std::cout << "SM algorithm starting ..." << std::endl;
     initialPartition(m_buckets[0], m_buckets[1]);
