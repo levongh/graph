@@ -5,7 +5,7 @@
 #include "graph.h"
 #include "timer.h"
 #include "graphinput.h"
-#include "partition_manager.h"
+#include "partitionmanager.h"
 
 int main(int argc, char** argv)
 {
@@ -33,7 +33,7 @@ int main(int argc, char** argv)
     std::cout << "DFS" << std::endl;
     tmp->DFS(3);
 
-    //auto mgr = partition_manager::get_instance();
+    //auto mgr = PartitionManager::get_instance();
 
     //timer monitoring;
     //auto part = mgr->create_algorithm(partition_type::FETUCCIA_MATEISIS, tmp);
@@ -45,6 +45,6 @@ int main(int argc, char** argv)
 
     //part->run_partition();
 
-    //partition_manager::remove_instance();
+    //PartitionManager::remove_instance();
     return 0;
 }
