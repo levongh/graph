@@ -1,28 +1,28 @@
-#include "partition_manager.h"
+#include "partitionmanager.h"
 #include "kerniganlin.h"
 #include "fiducciamattheyses.h"
 #include "simulatedannealing.h"
 
-partition_manager* partition_manager::s_instance = nullptr;
-std::mutex partition_manager::s_mutex;
+PartitionManager* PartitionManager::s_instance = nullptr;
+std::mutex PartitionManager::s_mutex;
 
-partition_manager* partition_manager::get_instance()
+PartitionManager* PartitionManager::get_instance()
 {
     std::lock_guard<std::mutex> lcok(s_mutex);
     if (nullptr == s_instance) {
-        s_instance = new partition_manager();
+        s_instance = new PartitionManager();
     }
     return s_instance;
 }
 
-void partition_manager::remove_instance()
+void PartitionManager::remove_instance()
 {
     std::lock_guard<std::mutex> lcok(s_mutex);
     delete s_instance;
     s_instance = nullptr;
 }
 
-GraphPartition* partition_manager::create_algorithm(partition_type pt, Graph* G)
+GraphPartition* PartitionManager::create_algorithm(partition_type pt, Graph* G)
 {
     if (pt == partition_type::KERNIGAN_LIN) {
         m_algorithms.push_back(new KerniganLin{G});
@@ -38,7 +38,7 @@ GraphPartition* partition_manager::create_algorithm(partition_type pt, Graph* G)
     }
 }
 
-partition_manager::~partition_manager()
+PartitionManager::~PartitionManager()
 {
     for (auto iter : m_algorithms) {
         delete iter;

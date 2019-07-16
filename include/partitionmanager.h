@@ -4,32 +4,32 @@
 
 /// @brief manager for partition alforithm creation
 /// @brief should work like builder pattern
-class partition_manager
+class PartitionManager
 {
     /// @brief public interfaces
     /// @{
 public:
 
     /// @brief default constructor
-    partition_manager()
+    PartitionManager()
         : m_algorithms{}
     {}
 
     /// @brief destructor
-    ~partition_manager();
+    ~PartitionManager();
 
     /// @brief copy constructor
-    partition_manager(const partition_manager& other) = delete;
+    PartitionManager(const PartitionManager& other) = delete;
 
     /// @brief copy assignment operator
-    partition_manager& operator=(const partition_manager& other) = delete;
+    PartitionManager& operator=(const PartitionManager& other) = delete;
 
 
     /// @brief move constructor
-    partition_manager(partition_manager&& other) = delete;
+    PartitionManager(PartitionManager&& other) = delete;
 
     /// @brief copy assignment operator
-    partition_manager& operator=(partition_manager&& other) = delete;
+    PartitionManager& operator=(PartitionManager&& other) = delete;
 
     /// @brief create and return required algorithm
     GraphPartition* create_algorithm(partition_type pt, Graph* g);
@@ -38,12 +38,12 @@ public:
     /// @brief static interfaces
     /// @{
 public:
-    static partition_manager* get_instance();
+    static PartitionManager* get_instance();
 
     static void remove_instance();
 
 private:
-    static partition_manager* s_instance;
+    static PartitionManager* s_instance;
     static std::mutex s_mutex;
     /// @}
 
