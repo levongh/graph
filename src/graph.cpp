@@ -13,8 +13,8 @@ namespace {
 class CompareGreater
 {
 public:
-    bool operator()(const std::pair<int, Vertex*> lhs,
-                    const std::pair<int, Vertex*> rhs)
+    bool operator()(const std::pair<unsigned, Vertex*>& lhs,
+                    const std::pair<unsigned, Vertex*>& rhs)
     {
         return (lhs.first > rhs.first);
     }
@@ -263,19 +263,19 @@ void Graph::mstPrim(const unsigned root)
 }
 
 std::map<unsigned, std::pair<int, unsigned> > Graph::Dijkstra(const unsigned start) {
-    std::map<unsigned, int > weights;
+    std::map<unsigned, unsigned> weights;
     std::map<unsigned, unsigned > parents;
-    for (unsigned int i = 0; i < m_vertexes.size(); ++i){
-        weights[m_vertexes[i]] = std::numeric_limits<int>::max();
-        parents[m_vertexes[i]] = 0;
+    for (const auto& item : m_vertexes) {
+        weights[item] = std::numeric_limits<int>::max();
+        parents[item] = 0;
     }
 
-    std::priority_queue<std::pair<int, Vertex*>, std::vector<std::pair<int, Vertex*> >,CompareGreater> Q;
+    std::priority_queue<NodeType, std::vector<NodeType>, CompareGreater> Q;
 
     weights[start] = 0;
 
     Q.push(std::make_pair(0, m_work[start]));
-    std::pair<int, Vertex*> currentNode;
+    NodeType currentNode;
     while (!Q.empty()) {
         currentNode = Q.top();
         Q.pop();
@@ -290,8 +290,8 @@ std::map<unsigned, std::pair<int, unsigned> > Graph::Dijkstra(const unsigned sta
         }
     }
     std::map<unsigned, std::pair<int, unsigned> > result;
-    for (unsigned int i = 0; i < m_vertexes.size(); ++i){
-        result[m_vertexes[i]] = std::make_pair(weights[m_vertexes[i]], parents[m_vertexes[i]]);
+    for (const auto& item : m_vertexes){
+        result[item] = std::make_pair(weights[item], parents[item]);
     }
     return std::move(result);
 }

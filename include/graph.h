@@ -46,7 +46,7 @@ public:
     }
 };
 
-/** 
+/**
  * @brief class graph
  * @brief this is a simple implementation of graph data structure
  * @param m_numvertexes number of vertexes
@@ -55,8 +55,10 @@ public:
  */
 class Graph
 {
+    using NodeType = std::pair<unsigned, Vertex*>;
+
 public:
-    Graph(bool temp = false)
+    Graph()
         : m_numvertexes{0}
     {
     }
